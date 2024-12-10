@@ -1,0 +1,3 @@
+[submodule "tools/htelem-autogen/webref"]
+	path = tools/htelem-autogen/webref
+	url = https://github.com/w3c/webref/

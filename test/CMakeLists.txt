@@ -1,0 +1,2 @@
+add_executable(htelem_tests test_runner.cpp simple_element_tests.cpp braid_tests.cpp braided_renderer_tests.cpp)
+target_link_libraries(htelem_tests PUBLIC htelem)

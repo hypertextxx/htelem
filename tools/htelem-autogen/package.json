@@ -1,0 +1,21 @@
+{
+  "name": "htelem-autogen",
+  "version": "0.0.1",
+  "description": "Generates htelem++ headers from IDL specifications",
+  "main": "build/index.js",
+  "scripts": {
+    "start": "tsc && node build/index.js",
+    "debug": "tsc && node --inspect-brk build/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MPL-2.0",
+  "devDependencies": {
+    "@types/node": "^22.9.1",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@webref/elements": "^2.4.0",
+    "@webref/idl": "^3.56.0"
+  }
+}
