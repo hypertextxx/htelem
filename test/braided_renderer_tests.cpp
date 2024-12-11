@@ -8,7 +8,7 @@ using namespace ht::ml;
 
 TEST(BraidedSimpleElement) {
     static constexpr auto c = child{ _aaa = "test"sv };
-    static constexpr auto rendered_child = braided_renderer{ }.render(c);
+    static constexpr auto rendered_child = braided_renderer::render_element(c);
     static constexpr auto rendered_text_size = sv_braid_size(rendered_child);
     static constexpr auto rendered_text = sv_braid_to_str<rendered_text_size>(rendered_child);
     static constexpr auto text_view = std::string_view { rendered_text };
@@ -17,15 +17,14 @@ TEST(BraidedSimpleElement) {
     EXPECT(text_view, std::equal_to, R"(<child aaa="test"></child>)"sv);
     
     static constexpr auto x = braided_renderer::render_element(child{ _aaa="test"sv });
-    static constexpr auto lit = HT_BRAID_LITERAL(x);
+    static constexpr auto lit = braid_literal<x>;
     EXPECT(text_view, std::equal_to, std::string_view{ lit });
 };
 
-
 static constexpr auto embedded_child = child2 { _aaa = "hello"sv, _bbb = "world"sv };
-static constexpr HT_EXPORT_PAGE("test_braided_embedded_element.html") auto embedded_child_html = HT_HTML_BRAID_LITERAL(embedded_child);
+static constexpr HT_EXPORT_PAGE("test_braided_embedded_element.html") auto embedded_child_html = braided_renderer::static_html<embedded_child>;
 TEST(BraidedEmbeddedElement) {
-   EXPECT(std::string_view{ embedded_child_html }, std::equal_to, R"(<child aaa="hello" bbb="world"></child>)"sv); 
+    EXPECT(embedded_child_html, std::equal_to, R"(<child aaa="hello" bbb="world"></child>)"sv); 
 };
 
 static constexpr auto basic_full_page = html{ 
@@ -38,11 +37,9 @@ static constexpr auto basic_full_page = html{
         }
     }
 };
-
-static constexpr HT_EXPORT_PAGE("test_braided_basic_full_page.html") auto basic_full_page_html = HT_HTML_BRAID_LITERAL(basic_full_page); 
-
+static constexpr HT_EXPORT_PAGE("test_braided_basic_full_page.html") auto basic_full_page_html = braided_renderer::static_html<basic_full_page>; 
 TEST(BraidedBasicFullPage) {
-    EXPECT(std::string_view{ basic_full_page_html }, std::equal_to, R"(<html>
+    EXPECT(basic_full_page_html, std::equal_to, R"(<html>
     <head>
         <title>test</title>
     </head>

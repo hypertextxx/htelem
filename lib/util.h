@@ -3,4 +3,4 @@
 
 #include "static_string.h"
 
-#endif //HTELEM_UTIL_H
+#endif // HTELEM_UTIL_H

@@ -58,9 +58,9 @@ TEST(StringViewBraid2){
     using ty = braid_common_type<std::decay_t<decltype(br)>>::type; 
     EXPECT_TRUE(br.is_uniform); 
 
-    static constexpr auto array = sv_braid_to_str<sv_braid_size(br)>(br);
+    static constexpr auto array = braid_literal<br>;
 
-    static constexpr std::string_view as_sv{ array };
+    static constexpr std::string_view as_sv = braid_literal_view<br>;
     EXPECT(as_sv.size(), std::equal_to, array.size());
     static_assert(as_sv == "there's a place downtown"sv); // where the freaks all come around
     EXPECT(as_sv, std::equal_to, "there's a place downtown"sv);
