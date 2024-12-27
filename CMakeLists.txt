@@ -6,9 +6,10 @@ set(CMAKE_CXX_COMPILER /usr/bin/clang++)
 
 project(htelem)
 
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 26)
 
-set(HTELEM_SOURCES lib/attribute_list.h lib/braid.h lib/braided_renderer.h lib/element.h lib/html.h lib/interface_spec.h lib/render_common.h lib/static_string.h lib/util.h)
+set(HTELEM_HEADER_PATH "${CMAKE_SOURCE_DIR}/include/htelem")
+set(HTELEM_SOURCES "${HTELEM_HEADER_PATH}/attribute_list.h" "${HTELEM_HEADER_PATH}/braid.h" "${HTELEM_HEADER_PATH}/braided_renderer.h" "${HTELEM_HEADER_PATH}/element.h" "${HTELEM_HEADER_PATH}/html.h" "${HTELEM_HEADER_PATH}/interface_spec.h" "${HTELEM_HEADER_PATH}/render_common.h" "${HTELEM_HEADER_PATH}/static_string.h" "${HTELEM_HEADER_PATH}/util.h")
 
 set(HTELEM_AUTOGEN_DIR "${CMAKE_SOURCE_DIR}/tools/htelem-autogen")
 
@@ -30,7 +31,7 @@ function(warn_format TGT SRCS)
 endfunction()
 
 add_library(htelem INTERFACE ${HTELEM_SOURCES})
-target_include_directories(htelem INTERFACE ${CMAKE_SOURCE_DIR}/lib/)
+target_include_directories(htelem INTERFACE ${CMAKE_SOURCE_DIR}/include)
 add_dependencies(htelem ht-defs)
 warn_format(htelem "${HTELEM_SOURCES}")
 

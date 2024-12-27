@@ -1,7 +1,7 @@
 #include "simple_elements.h"
 #include "testing.h"
-#include "../lib/braided_renderer.h"
-#include "../lib/html.h"
+#include <htelem/braided_renderer.h>
+#include <htelem/html.h>
 
 using namespace ht;
 using namespace ht::ml;
@@ -22,7 +22,7 @@ TEST(BraidedSimpleElement) {
 };
 
 static constexpr auto embedded_child = child2 { _aaa = "hello"sv, _bbb = "world"sv };
-static constexpr HT_EXPORT_PAGE("test_braided_embedded_element.html") auto embedded_child_html = braided_renderer::static_html<embedded_child>;
+static constexpr auto embedded_child_html = braided_renderer::static_html<embedded_child>;
 TEST(BraidedEmbeddedElement) {
     EXPECT(embedded_child_html, std::equal_to, R"(<child aaa="hello" bbb="world"></child>)"sv); 
 };
@@ -37,7 +37,7 @@ static constexpr auto basic_full_page = html{
         }
     }
 };
-static constexpr HT_EXPORT_PAGE("test_braided_basic_full_page.html") auto basic_full_page_html = braided_renderer::static_html<basic_full_page>; 
+static constexpr auto  basic_full_page_html __attribute__((section("ht:basic_full_page.html"))) = braided_renderer::static_html<basic_full_page>; 
 TEST(BraidedBasicFullPage) {
     EXPECT(basic_full_page_html, std::equal_to, R"(<html>
     <head>

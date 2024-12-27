@@ -1,8 +1,7 @@
 #ifndef HTELEM_SIMPLE_ELEMENTS_H
 #define HTELEM_SIMPLE_ELEMENTS_H
 
-#include "../lib/element.h"
-#include <string>
+#include <htelem/element.h>
 
 struct y {
     char c;

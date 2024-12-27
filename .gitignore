@@ -1,6 +1,5 @@
 build/
 package-lock.json
-tools/htelem-autogen/out/
 node_modules/
 .idea/
 

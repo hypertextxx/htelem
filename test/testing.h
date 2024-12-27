@@ -4,7 +4,7 @@
 #include <type_traits>
 #include <iostream>
 #include <functional>
-#include "../lib/util.h"
+#include <htelem/util.h>
 
 namespace testing {
     using ht::static_string;
@@ -66,6 +66,7 @@ template <std::size_t N, std::invocable<testing::controller&> Func> constexpr au
  */
 #define TEST(name, ...) extern const testing::test_impl<#name> test_ ## name = __VA_OPT__((test_ ## __VA_ARGS__)._name |) [](testing::controller& _controller) -> void
 #define EXPECT_TRUE(cond) (_controller.expect(static_cast<bool>((cond)), true, #cond))
+#define STATIC_EXPECT_TRUE(cond) static_assert(cond); EXPECT_TRUE(cond)
 
 /**
  * Expects the given comparison to succeed. `actual` and `expected` must be references to types satisfying std::is_convertible_v

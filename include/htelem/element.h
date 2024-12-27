@@ -23,7 +23,7 @@ struct element<Tag, interface_spec<In, Parent, Attrs...>, std::tuple<Aspects...>
     template <class... T>
         requires(sizeof...(Aspects) > 0)
     constexpr explicit element(T&&... t)
-        : attribute_list<In>{}, aspects{ (interface::make(*this, detail::cstr_to_sv(std::forward<T>(t))...)) } {}
+        : attribute_list<In>{}, aspects{ (interface::make(*this, detail::cstr_to_sv(std::forward<T>(t))...)) } { }
 
     template <class... T>
         requires(sizeof...(Aspects) == 0)

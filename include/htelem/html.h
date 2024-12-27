@@ -5,7 +5,7 @@
 #include <variant>
 
 namespace ht {
-struct unimplemented {};
+struct unimplemented { };
 namespace ml {
 #include "../tools/htelem-autogen/out/attribute_spec.def"
 }

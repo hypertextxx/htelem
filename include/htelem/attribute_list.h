@@ -1,7 +1,7 @@
 #ifndef HTELEM_ATTRIBUTE_LIST_H
 #define HTELEM_ATTRIBUTE_LIST_H
 
-#include "static_string.h"
+#include "util.h"
 #include <type_traits>
 
 namespace ht {
@@ -14,22 +14,13 @@ public:
     static constexpr auto attr_name = Name;
     using attr_type = T;
     bool initialized = false;
-    constexpr explicit attribute(const T& _value): value{ _value }, initialized{ true } {}
+    constexpr explicit attribute(const T& _value): value{ _value }, initialized{ true } { }
     constexpr attribute() = default;
 
     constexpr T& operator()() { return value; }
 
     constexpr const T& operator()() const { return value; }
 };
-
-namespace detail {
-    template <class From, class... To> struct first_convertible_to;
-    template <class From> struct first_convertible_to<From>: std::false_type {};
-    template <class From, class To, class... Tail> struct first_convertible_to<From, To, Tail...>
-        : std::conditional_t<std::is_convertible_v<From, To>, std::type_identity<To>,
-                             first_convertible_to<From, Tail...>> {};
-    template <class From, class... To> using first_convertible_to_t = first_convertible_to<From, To...>::type;
-} // namespace detail
 
 template <static_string At, class... T> struct attribute_spec {
     static constexpr auto attr_name = At;
@@ -51,44 +42,31 @@ template <class AttrsTuple, class ChildrenTuple> struct element_aspects {
     constexpr element_aspects(element_aspects& other) = default;
     constexpr element_aspects(element_aspects&& other) = default;
 
-    constexpr element_aspects() {}
+    constexpr element_aspects() { }
     constexpr element_aspects(AttrsTuple&& _set_attrs, ChildrenTuple&& _children)
-        : set_attrs{ std::move(_set_attrs) }, children{ std::move(_children) } {}
+        : set_attrs{ std::move(_set_attrs) }, children{ std::move(_children) } { }
 };
 
 namespace detail {
 
-    template <template <class> class Predicate, class... T> struct filter_types;
-    template <template <class> class Predicate> struct filter_types<Predicate> {
-        using type = std::tuple<>;
-    };
-    template <template <class> class Predicate, class T, class... Tail> struct filter_types<Predicate, T, Tail...> {
-        using type =
-                typename std::conditional<Predicate<T>::value,
-                                          decltype(std::tuple_cat(
-                                                  std::declval<std::tuple<T>>(),
-                                                  std::declval<typename filter_types<Predicate, Tail...>::type>())),
-                                          typename filter_types<Predicate, Tail...>::type>::type;
-    };
+    template <class T> struct is_attribute: std::false_type { };
+    template <static_string Name, class T> struct is_attribute<attribute<Name, T>>: std::true_type { };
 
-    template <class T> struct is_attribute: std::false_type {};
-    template <static_string Name, class T> struct is_attribute<attribute<Name, T>>: std::true_type {};
-
-    template <class T> struct is_attribute_ptr: std::false_type {};
+    template <class T> struct is_attribute_ptr: std::false_type { };
     template <static_string AttrName, class AttrType, static_string In>
-    struct is_attribute_ptr<attribute<AttrName, AttrType> attribute_list<In>::*>: std::true_type {};
+    struct is_attribute_ptr<attribute<AttrName, AttrType> attribute_list<In>::*>: std::true_type { };
 
-    template <class T> struct is_descendant: std::bool_constant<not is_attribute<T>::value> {};
+    template <class T> struct is_descendant: std::bool_constant<not is_attribute<T>::value> { };
 
-    template <class T> struct get_attribute_name: std::false_type {};
+    template <class T> struct get_attribute_name: std::false_type { };
     template <static_string AttrName, class T> struct get_attribute_name<attribute<AttrName, T>>: std::true_type {
         static constexpr auto name = AttrName;
     };
 
     template <static_string AttrName, class... AttrPtr> struct find_attr_holder;
-    template <static_string AttrName> struct find_attr_holder<AttrName>: std::false_type {};
+    template <static_string AttrName> struct find_attr_holder<AttrName>: std::false_type { };
     template <static_string AttrName, class A, class... Tail> struct find_attr_holder<AttrName, A, Tail...>
-        : find_attr_holder<AttrName, Tail...> {};
+        : find_attr_holder<AttrName, Tail...> { };
     template <static_string AttrName, static_string In, class AttrType, class... Tail>
     struct find_attr_holder<AttrName, attribute<AttrName, AttrType> attribute_list<In>::*, Tail...>: std::true_type {
         static constexpr auto interface_name = In;
@@ -98,9 +76,9 @@ namespace detail {
     template <class Attr, class PtrTuple> struct find_attr_holder_in_tuple;
     template <static_string AttrName, class AttrType, class... AttrPtr>
     struct find_attr_holder_in_tuple<attribute<AttrName, AttrType>, std::tuple<AttrPtr...>>
-        : find_attr_holder<AttrName, AttrPtr...> {};
+        : find_attr_holder<AttrName, AttrPtr...> { };
 
-    template <auto A> struct interface_name_from_ptr {};
+    template <auto A> struct interface_name_from_ptr { };
     template <static_string In, static_string AttrName, class AttrType,
               attribute<AttrName, AttrType> attribute_list<In>::*Ptr>
     struct interface_name_from_ptr<Ptr> {
@@ -110,8 +88,8 @@ namespace detail {
     template <class T> constexpr auto cstr_to_sv(T&& t) { return std::forward<T>(t); }
     template <std::size_t N> constexpr auto cstr_to_sv(const char (&c)[N]) { return std::string_view{ c, N - 1 }; }
 
-    template <class T> struct child_type_map: std::type_identity<T> {};
-    template <std::size_t N> struct child_type_map<const char (&)[N]>: std::type_identity<std::string_view> {};
+    template <class T> struct child_type_map: std::type_identity<T> { };
+    template <std::size_t N> struct child_type_map<const char (&)[N]>: std::type_identity<std::string_view> { };
     template <class T> using child_mapped_type_t = child_type_map<T>::type;
 
     template <class... T> using child_types = std::tuple<child_mapped_type_t<T>...>;

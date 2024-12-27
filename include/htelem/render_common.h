@@ -26,10 +26,8 @@ template <std::size_t Depth> constexpr std::string_view indent() {
     return static_cast<std::string_view>(detail::indent_string<Depth>);
 }
 
-template <class T> struct custom_renderer {};
+template <class T> struct custom_renderer { };
 
 } // namespace ht
-
-#define HT_EXPORT_PAGE(path) __attribute__((section("ht:" path)))
 
 #endif

@@ -7,13 +7,13 @@
 #include <type_traits>
 
 namespace ht {
-struct empty_strand {};
+struct empty_strand { };
 
 template <class L, class R> struct braid;
 
 namespace detail {
-    template <class T> struct is_braid: std::false_type {};
-    template <class L, class R> struct is_braid<braid<L, R>>: std::true_type {};
+    template <class T> struct is_braid: std::false_type { };
+    template <class L, class R> struct is_braid<braid<L, R>>: std::true_type { };
     template <class T> constexpr bool is_braid_v = is_braid<std::decay_t<T>>::value;
 
     template <class T> struct count_braid {
@@ -28,13 +28,13 @@ namespace detail {
 } // namespace detail
 
 template <class T> struct braid_common_type
-    : std::conditional_t<!detail::is_braid_v<T>, std::type_identity<T>, std::type_identity_t<empty_strand>> {};
-template <class L> struct braid_common_type<braid<L, empty_strand>>: std::type_identity<L> {};
+    : std::conditional_t<!detail::is_braid_v<T>, std::type_identity<T>, std::type_identity_t<empty_strand>> { };
+template <class L> struct braid_common_type<braid<L, empty_strand>>: std::type_identity<L> { };
 template <class L, class R> struct braid_common_type<braid<L, R>>
     : std::common_type<std::conditional_t<detail::is_braid_v<L>, typename braid_common_type<std::decay_t<L>>::type,
                                           std::decay_t<L>>,
                        std::conditional_t<detail::is_braid_v<R>, typename braid_common_type<std::decay_t<R>>::type,
-                                          std::decay_t<R>>> {};
+                                          std::decay_t<R>>> { };
 
 template <class T, class = void> constexpr bool is_uniform_braid_v = false;
 template <class L, class R>
@@ -46,8 +46,8 @@ template <class L, class R = empty_strand> struct braid {
     const L left;
     const R right;
 
-    constexpr explicit braid(L&& _left): left{ std::move(_left) } {}
-    constexpr explicit braid(L&& _left, R&& _right): left{ std::move(_left) }, right{ std::move(_right) } {}
+    constexpr explicit braid(L&& _left): left{ std::move(_left) } { }
+    constexpr explicit braid(L&& _left, R&& _right): left{ std::move(_left) }, right{ std::move(_right) } { }
 
     constexpr auto& first() const {
         if constexpr (detail::is_braid_v<L>) {

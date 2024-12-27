@@ -1,7 +1,5 @@
 #include "testing.h"
-#include "../lib/braid.h"
-#include <algorithm>
-#include <ranges>
+#include <htelem/braid.h>
 #include <string_view>
 
 using namespace ht;
@@ -15,7 +13,7 @@ constexpr auto make_non_uniform_braid() {
 
 TEST(NonUniformBraid) {
     static constexpr auto br = make_non_uniform_braid(); 
-    static_assert(!br.is_uniform);
+    STATIC_EXPECT_TRUE(!br.is_uniform);
     EXPECT_TRUE(!br.is_uniform);
 };
 
@@ -29,16 +27,16 @@ constexpr auto make_sv_braid_1(){
 TEST(StringViewBraid1) {
     static constexpr auto br = make_sv_braid_1();
 
-    static_assert(br.count() == 3);
+    STATIC_EXPECT_TRUE(br.count() == 3);
     EXPECT(br.count(), std::equal_to, 3);
 
-    static_assert(std::is_same_v<decltype(br.left), const std::string_view>);
+    STATIC_EXPECT_TRUE((std::is_same_v<decltype(br.left), const std::string_view>));
 
-    static_assert(br.is_uniform);
+    STATIC_EXPECT_TRUE(br.is_uniform);
     EXPECT_TRUE(br.is_uniform);
     
     static constexpr auto br_size = br.reduce([](std::size_t n, const std::string_view& sv){ return n + sv.size(); }, 0);
-    static_assert(br_size == 15);
+    STATIC_EXPECT_TRUE(br_size == 15);
     EXPECT(br_size, std::equal_to, 15);
 };
 
@@ -62,7 +60,7 @@ TEST(StringViewBraid2){
 
     static constexpr std::string_view as_sv = braid_literal_view<br>;
     EXPECT(as_sv.size(), std::equal_to, array.size());
-    static_assert(as_sv == "there's a place downtown"sv); // where the freaks all come around
+    STATIC_EXPECT_TRUE(as_sv == "there's a place downtown"sv); // where the freaks all come around
     EXPECT(as_sv, std::equal_to, "there's a place downtown"sv);
 };
 

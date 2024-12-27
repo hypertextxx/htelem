@@ -5,9 +5,9 @@ using namespace ht;
 using namespace ht::ml;
 
 TEST(AttributeSpecsMakeAttributes) {
-    EXPECT_TRUE((std::is_same_v<decltype(_aaa = "test"), attribute<"aaa", std::string_view>>));
-    EXPECT_TRUE((std::is_same_v<decltype(_bbb = "test"), attribute<"bbb", std::string_view>>));
-    EXPECT_TRUE((std::is_same_v<decltype(_bbb = y{ 'A' }), attribute<"bbb", y>>));
+    STATIC_EXPECT_TRUE((std::is_same_v<decltype(_aaa = "test"), attribute<"aaa", std::string_view>>));
+    STATIC_EXPECT_TRUE((std::is_same_v<decltype(_bbb = "test"), attribute<"bbb", std::string_view>>));
+    STATIC_EXPECT_TRUE((std::is_same_v<decltype(_bbb = y{ 'A' }), attribute<"bbb", y>>));
 };
 
 TEST(SimpleElementsWithAttributes) {

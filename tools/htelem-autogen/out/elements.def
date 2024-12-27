@@ -1,0 +1,695 @@
+template <class Cs> struct article: public element<"article", ::ht::interface::HTMLElement, Cs> {
+    using element<"article", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> article(T&& ...t) -> article<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct section: public element<"section", ::ht::interface::HTMLElement, Cs> {
+    using element<"section", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> section(T&& ...t) -> section<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct nav: public element<"nav", ::ht::interface::HTMLElement, Cs> {
+    using element<"nav", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> nav(T&& ...t) -> nav<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct aside: public element<"aside", ::ht::interface::HTMLElement, Cs> {
+    using element<"aside", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> aside(T&& ...t) -> aside<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct hgroup: public element<"hgroup", ::ht::interface::HTMLElement, Cs> {
+    using element<"hgroup", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> hgroup(T&& ...t) -> hgroup<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct header: public element<"header", ::ht::interface::HTMLElement, Cs> {
+    using element<"header", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> header(T&& ...t) -> header<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct footer: public element<"footer", ::ht::interface::HTMLElement, Cs> {
+    using element<"footer", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> footer(T&& ...t) -> footer<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct address: public element<"address", ::ht::interface::HTMLElement, Cs> {
+    using element<"address", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> address(T&& ...t) -> address<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct dt: public element<"dt", ::ht::interface::HTMLElement, Cs> {
+    using element<"dt", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> dt(T&& ...t) -> dt<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct dd: public element<"dd", ::ht::interface::HTMLElement, Cs> {
+    using element<"dd", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> dd(T&& ...t) -> dd<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct figure: public element<"figure", ::ht::interface::HTMLElement, Cs> {
+    using element<"figure", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> figure(T&& ...t) -> figure<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct figcaption: public element<"figcaption", ::ht::interface::HTMLElement, Cs> {
+    using element<"figcaption", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> figcaption(T&& ...t) -> figcaption<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct main: public element<"main", ::ht::interface::HTMLElement, Cs> {
+    using element<"main", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> main(T&& ...t) -> main<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct search: public element<"search", ::ht::interface::HTMLElement, Cs> {
+    using element<"search", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> search(T&& ...t) -> search<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct em: public element<"em", ::ht::interface::HTMLElement, Cs> {
+    using element<"em", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> em(T&& ...t) -> em<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct strong: public element<"strong", ::ht::interface::HTMLElement, Cs> {
+    using element<"strong", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> strong(T&& ...t) -> strong<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct small: public element<"small", ::ht::interface::HTMLElement, Cs> {
+    using element<"small", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> small(T&& ...t) -> small<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct s: public element<"s", ::ht::interface::HTMLElement, Cs> {
+    using element<"s", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> s(T&& ...t) -> s<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct cite: public element<"cite", ::ht::interface::HTMLElement, Cs> {
+    using element<"cite", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> cite(T&& ...t) -> cite<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct dfn: public element<"dfn", ::ht::interface::HTMLElement, Cs> {
+    using element<"dfn", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> dfn(T&& ...t) -> dfn<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct abbr: public element<"abbr", ::ht::interface::HTMLElement, Cs> {
+    using element<"abbr", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> abbr(T&& ...t) -> abbr<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct ruby: public element<"ruby", ::ht::interface::HTMLElement, Cs> {
+    using element<"ruby", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> ruby(T&& ...t) -> ruby<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct rt: public element<"rt", ::ht::interface::HTMLElement, Cs> {
+    using element<"rt", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> rt(T&& ...t) -> rt<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct rp: public element<"rp", ::ht::interface::HTMLElement, Cs> {
+    using element<"rp", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> rp(T&& ...t) -> rp<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct code: public element<"code", ::ht::interface::HTMLElement, Cs> {
+    using element<"code", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> code(T&& ...t) -> code<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct var: public element<"var", ::ht::interface::HTMLElement, Cs> {
+    using element<"var", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> var(T&& ...t) -> var<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct samp: public element<"samp", ::ht::interface::HTMLElement, Cs> {
+    using element<"samp", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> samp(T&& ...t) -> samp<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct kbd: public element<"kbd", ::ht::interface::HTMLElement, Cs> {
+    using element<"kbd", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> kbd(T&& ...t) -> kbd<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct sub: public element<"sub", ::ht::interface::HTMLElement, Cs> {
+    using element<"sub", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> sub(T&& ...t) -> sub<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct sup: public element<"sup", ::ht::interface::HTMLElement, Cs> {
+    using element<"sup", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> sup(T&& ...t) -> sup<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct i: public element<"i", ::ht::interface::HTMLElement, Cs> {
+    using element<"i", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> i(T&& ...t) -> i<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct b: public element<"b", ::ht::interface::HTMLElement, Cs> {
+    using element<"b", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> b(T&& ...t) -> b<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct u: public element<"u", ::ht::interface::HTMLElement, Cs> {
+    using element<"u", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> u(T&& ...t) -> u<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct mark: public element<"mark", ::ht::interface::HTMLElement, Cs> {
+    using element<"mark", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> mark(T&& ...t) -> mark<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct bdi: public element<"bdi", ::ht::interface::HTMLElement, Cs> {
+    using element<"bdi", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> bdi(T&& ...t) -> bdi<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct bdo: public element<"bdo", ::ht::interface::HTMLElement, Cs> {
+    using element<"bdo", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> bdo(T&& ...t) -> bdo<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct wbr: public element<"wbr", ::ht::interface::HTMLElement, Cs> {
+    using element<"wbr", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> wbr(T&& ...t) -> wbr<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct summary: public element<"summary", ::ht::interface::HTMLElement, Cs> {
+    using element<"summary", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> summary(T&& ...t) -> summary<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct noscript: public element<"noscript", ::ht::interface::HTMLElement, Cs> {
+    using element<"noscript", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> noscript(T&& ...t) -> noscript<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct acronym: public element<"acronym", ::ht::interface::HTMLElement, Cs> {
+    using element<"acronym", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> acronym(T&& ...t) -> acronym<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct noframes: public element<"noframes", ::ht::interface::HTMLElement, Cs> {
+    using element<"noframes", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> noframes(T&& ...t) -> noframes<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct menuitem: public element<"menuitem", ::ht::interface::HTMLElement, Cs> {
+    using element<"menuitem", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> menuitem(T&& ...t) -> menuitem<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct noembed: public element<"noembed", ::ht::interface::HTMLElement, Cs> {
+    using element<"noembed", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> noembed(T&& ...t) -> noembed<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct plaintext: public element<"plaintext", ::ht::interface::HTMLElement, Cs> {
+    using element<"plaintext", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> plaintext(T&& ...t) -> plaintext<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct rb: public element<"rb", ::ht::interface::HTMLElement, Cs> {
+    using element<"rb", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> rb(T&& ...t) -> rb<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct rtc: public element<"rtc", ::ht::interface::HTMLElement, Cs> {
+    using element<"rtc", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> rtc(T&& ...t) -> rtc<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct strike: public element<"strike", ::ht::interface::HTMLElement, Cs> {
+    using element<"strike", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> strike(T&& ...t) -> strike<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct basefont: public element<"basefont", ::ht::interface::HTMLElement, Cs> {
+    using element<"basefont", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> basefont(T&& ...t) -> basefont<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct big: public element<"big", ::ht::interface::HTMLElement, Cs> {
+    using element<"big", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> big(T&& ...t) -> big<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct center: public element<"center", ::ht::interface::HTMLElement, Cs> {
+    using element<"center", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> center(T&& ...t) -> center<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct nobr: public element<"nobr", ::ht::interface::HTMLElement, Cs> {
+    using element<"nobr", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> nobr(T&& ...t) -> nobr<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct tt: public element<"tt", ::ht::interface::HTMLElement, Cs> {
+    using element<"tt", ::ht::interface::HTMLElement, Cs>::element;
+};
+template <class ...T> tt(T&& ...t) -> tt<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct html: public element<"html", ::ht::interface::HTMLHtmlElement, Cs> {
+    using element<"html", ::ht::interface::HTMLHtmlElement, Cs>::element;
+};
+template <class ...T> html(T&& ...t) -> html<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct head: public element<"head", ::ht::interface::HTMLHeadElement, Cs> {
+    using element<"head", ::ht::interface::HTMLHeadElement, Cs>::element;
+};
+template <class ...T> head(T&& ...t) -> head<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct title: public element<"title", ::ht::interface::HTMLTitleElement, Cs> {
+    using element<"title", ::ht::interface::HTMLTitleElement, Cs>::element;
+};
+template <class ...T> title(T&& ...t) -> title<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct base: public element<"base", ::ht::interface::HTMLBaseElement, Cs> {
+    using element<"base", ::ht::interface::HTMLBaseElement, Cs>::element;
+};
+template <class ...T> base(T&& ...t) -> base<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct link: public element<"link", ::ht::interface::HTMLLinkElement, Cs> {
+    using element<"link", ::ht::interface::HTMLLinkElement, Cs>::element;
+};
+template <class ...T> link(T&& ...t) -> link<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct meta: public element<"meta", ::ht::interface::HTMLMetaElement, Cs> {
+    using element<"meta", ::ht::interface::HTMLMetaElement, Cs>::element;
+};
+template <class ...T> meta(T&& ...t) -> meta<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct style: public element<"style", ::ht::interface::HTMLStyleElement, Cs> {
+    using element<"style", ::ht::interface::HTMLStyleElement, Cs>::element;
+};
+template <class ...T> style(T&& ...t) -> style<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct body: public element<"body", ::ht::interface::HTMLBodyElement, Cs> {
+    using element<"body", ::ht::interface::HTMLBodyElement, Cs>::element;
+};
+template <class ...T> body(T&& ...t) -> body<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct h1: public element<"h1", ::ht::interface::HTMLHeadingElement, Cs> {
+    using element<"h1", ::ht::interface::HTMLHeadingElement, Cs>::element;
+};
+template <class ...T> h1(T&& ...t) -> h1<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct h2: public element<"h2", ::ht::interface::HTMLHeadingElement, Cs> {
+    using element<"h2", ::ht::interface::HTMLHeadingElement, Cs>::element;
+};
+template <class ...T> h2(T&& ...t) -> h2<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct h3: public element<"h3", ::ht::interface::HTMLHeadingElement, Cs> {
+    using element<"h3", ::ht::interface::HTMLHeadingElement, Cs>::element;
+};
+template <class ...T> h3(T&& ...t) -> h3<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct h4: public element<"h4", ::ht::interface::HTMLHeadingElement, Cs> {
+    using element<"h4", ::ht::interface::HTMLHeadingElement, Cs>::element;
+};
+template <class ...T> h4(T&& ...t) -> h4<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct h5: public element<"h5", ::ht::interface::HTMLHeadingElement, Cs> {
+    using element<"h5", ::ht::interface::HTMLHeadingElement, Cs>::element;
+};
+template <class ...T> h5(T&& ...t) -> h5<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct h6: public element<"h6", ::ht::interface::HTMLHeadingElement, Cs> {
+    using element<"h6", ::ht::interface::HTMLHeadingElement, Cs>::element;
+};
+template <class ...T> h6(T&& ...t) -> h6<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct p: public element<"p", ::ht::interface::HTMLParagraphElement, Cs> {
+    using element<"p", ::ht::interface::HTMLParagraphElement, Cs>::element;
+};
+template <class ...T> p(T&& ...t) -> p<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct hr: public element<"hr", ::ht::interface::HTMLHRElement, Cs> {
+    using element<"hr", ::ht::interface::HTMLHRElement, Cs>::element;
+};
+template <class ...T> hr(T&& ...t) -> hr<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct pre: public element<"pre", ::ht::interface::HTMLPreElement, Cs> {
+    using element<"pre", ::ht::interface::HTMLPreElement, Cs>::element;
+};
+template <class ...T> pre(T&& ...t) -> pre<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct listing: public element<"listing", ::ht::interface::HTMLPreElement, Cs> {
+    using element<"listing", ::ht::interface::HTMLPreElement, Cs>::element;
+};
+template <class ...T> listing(T&& ...t) -> listing<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct xmp: public element<"xmp", ::ht::interface::HTMLPreElement, Cs> {
+    using element<"xmp", ::ht::interface::HTMLPreElement, Cs>::element;
+};
+template <class ...T> xmp(T&& ...t) -> xmp<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct blockquote: public element<"blockquote", ::ht::interface::HTMLQuoteElement, Cs> {
+    using element<"blockquote", ::ht::interface::HTMLQuoteElement, Cs>::element;
+};
+template <class ...T> blockquote(T&& ...t) -> blockquote<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct q: public element<"q", ::ht::interface::HTMLQuoteElement, Cs> {
+    using element<"q", ::ht::interface::HTMLQuoteElement, Cs>::element;
+};
+template <class ...T> q(T&& ...t) -> q<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct ol: public element<"ol", ::ht::interface::HTMLOListElement, Cs> {
+    using element<"ol", ::ht::interface::HTMLOListElement, Cs>::element;
+};
+template <class ...T> ol(T&& ...t) -> ol<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct ul: public element<"ul", ::ht::interface::HTMLUListElement, Cs> {
+    using element<"ul", ::ht::interface::HTMLUListElement, Cs>::element;
+};
+template <class ...T> ul(T&& ...t) -> ul<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct menu: public element<"menu", ::ht::interface::HTMLMenuElement, Cs> {
+    using element<"menu", ::ht::interface::HTMLMenuElement, Cs>::element;
+};
+template <class ...T> menu(T&& ...t) -> menu<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct li: public element<"li", ::ht::interface::HTMLLIElement, Cs> {
+    using element<"li", ::ht::interface::HTMLLIElement, Cs>::element;
+};
+template <class ...T> li(T&& ...t) -> li<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct dl: public element<"dl", ::ht::interface::HTMLDListElement, Cs> {
+    using element<"dl", ::ht::interface::HTMLDListElement, Cs>::element;
+};
+template <class ...T> dl(T&& ...t) -> dl<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct div: public element<"div", ::ht::interface::HTMLDivElement, Cs> {
+    using element<"div", ::ht::interface::HTMLDivElement, Cs>::element;
+};
+template <class ...T> div(T&& ...t) -> div<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct a: public element<"a", ::ht::interface::HTMLAnchorElement, Cs> {
+    using element<"a", ::ht::interface::HTMLAnchorElement, Cs>::element;
+};
+template <class ...T> a(T&& ...t) -> a<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct data: public element<"data", ::ht::interface::HTMLDataElement, Cs> {
+    using element<"data", ::ht::interface::HTMLDataElement, Cs>::element;
+};
+template <class ...T> data(T&& ...t) -> data<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct time: public element<"time", ::ht::interface::HTMLTimeElement, Cs> {
+    using element<"time", ::ht::interface::HTMLTimeElement, Cs>::element;
+};
+template <class ...T> time(T&& ...t) -> time<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct span: public element<"span", ::ht::interface::HTMLSpanElement, Cs> {
+    using element<"span", ::ht::interface::HTMLSpanElement, Cs>::element;
+};
+template <class ...T> span(T&& ...t) -> span<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct br: public element<"br", ::ht::interface::HTMLBRElement, Cs> {
+    using element<"br", ::ht::interface::HTMLBRElement, Cs>::element;
+};
+template <class ...T> br(T&& ...t) -> br<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct ins: public element<"ins", ::ht::interface::HTMLModElement, Cs> {
+    using element<"ins", ::ht::interface::HTMLModElement, Cs>::element;
+};
+template <class ...T> ins(T&& ...t) -> ins<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct del: public element<"del", ::ht::interface::HTMLModElement, Cs> {
+    using element<"del", ::ht::interface::HTMLModElement, Cs>::element;
+};
+template <class ...T> del(T&& ...t) -> del<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct picture: public element<"picture", ::ht::interface::HTMLPictureElement, Cs> {
+    using element<"picture", ::ht::interface::HTMLPictureElement, Cs>::element;
+};
+template <class ...T> picture(T&& ...t) -> picture<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct source: public element<"source", ::ht::interface::HTMLSourceElement, Cs> {
+    using element<"source", ::ht::interface::HTMLSourceElement, Cs>::element;
+};
+template <class ...T> source(T&& ...t) -> source<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct img: public element<"img", ::ht::interface::HTMLImageElement, Cs> {
+    using element<"img", ::ht::interface::HTMLImageElement, Cs>::element;
+};
+template <class ...T> img(T&& ...t) -> img<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct iframe: public element<"iframe", ::ht::interface::HTMLIFrameElement, Cs> {
+    using element<"iframe", ::ht::interface::HTMLIFrameElement, Cs>::element;
+};
+template <class ...T> iframe(T&& ...t) -> iframe<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct embed: public element<"embed", ::ht::interface::HTMLEmbedElement, Cs> {
+    using element<"embed", ::ht::interface::HTMLEmbedElement, Cs>::element;
+};
+template <class ...T> embed(T&& ...t) -> embed<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct object: public element<"object", ::ht::interface::HTMLObjectElement, Cs> {
+    using element<"object", ::ht::interface::HTMLObjectElement, Cs>::element;
+};
+template <class ...T> object(T&& ...t) -> object<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct video: public element<"video", ::ht::interface::HTMLVideoElement, Cs> {
+    using element<"video", ::ht::interface::HTMLVideoElement, Cs>::element;
+};
+template <class ...T> video(T&& ...t) -> video<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct audio: public element<"audio", ::ht::interface::HTMLAudioElement, Cs> {
+    using element<"audio", ::ht::interface::HTMLAudioElement, Cs>::element;
+};
+template <class ...T> audio(T&& ...t) -> audio<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct map: public element<"map", ::ht::interface::HTMLMapElement, Cs> {
+    using element<"map", ::ht::interface::HTMLMapElement, Cs>::element;
+};
+template <class ...T> map(T&& ...t) -> map<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct area: public element<"area", ::ht::interface::HTMLAreaElement, Cs> {
+    using element<"area", ::ht::interface::HTMLAreaElement, Cs>::element;
+};
+template <class ...T> area(T&& ...t) -> area<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct table: public element<"table", ::ht::interface::HTMLTableElement, Cs> {
+    using element<"table", ::ht::interface::HTMLTableElement, Cs>::element;
+};
+template <class ...T> table(T&& ...t) -> table<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct caption: public element<"caption", ::ht::interface::HTMLTableCaptionElement, Cs> {
+    using element<"caption", ::ht::interface::HTMLTableCaptionElement, Cs>::element;
+};
+template <class ...T> caption(T&& ...t) -> caption<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct colgroup: public element<"colgroup", ::ht::interface::HTMLTableColElement, Cs> {
+    using element<"colgroup", ::ht::interface::HTMLTableColElement, Cs>::element;
+};
+template <class ...T> colgroup(T&& ...t) -> colgroup<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct col: public element<"col", ::ht::interface::HTMLTableColElement, Cs> {
+    using element<"col", ::ht::interface::HTMLTableColElement, Cs>::element;
+};
+template <class ...T> col(T&& ...t) -> col<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct tbody: public element<"tbody", ::ht::interface::HTMLTableSectionElement, Cs> {
+    using element<"tbody", ::ht::interface::HTMLTableSectionElement, Cs>::element;
+};
+template <class ...T> tbody(T&& ...t) -> tbody<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct thead: public element<"thead", ::ht::interface::HTMLTableSectionElement, Cs> {
+    using element<"thead", ::ht::interface::HTMLTableSectionElement, Cs>::element;
+};
+template <class ...T> thead(T&& ...t) -> thead<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct tfoot: public element<"tfoot", ::ht::interface::HTMLTableSectionElement, Cs> {
+    using element<"tfoot", ::ht::interface::HTMLTableSectionElement, Cs>::element;
+};
+template <class ...T> tfoot(T&& ...t) -> tfoot<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct tr: public element<"tr", ::ht::interface::HTMLTableRowElement, Cs> {
+    using element<"tr", ::ht::interface::HTMLTableRowElement, Cs>::element;
+};
+template <class ...T> tr(T&& ...t) -> tr<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct td: public element<"td", ::ht::interface::HTMLTableCellElement, Cs> {
+    using element<"td", ::ht::interface::HTMLTableCellElement, Cs>::element;
+};
+template <class ...T> td(T&& ...t) -> td<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct th: public element<"th", ::ht::interface::HTMLTableCellElement, Cs> {
+    using element<"th", ::ht::interface::HTMLTableCellElement, Cs>::element;
+};
+template <class ...T> th(T&& ...t) -> th<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct form: public element<"form", ::ht::interface::HTMLFormElement, Cs> {
+    using element<"form", ::ht::interface::HTMLFormElement, Cs>::element;
+};
+template <class ...T> form(T&& ...t) -> form<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct label: public element<"label", ::ht::interface::HTMLLabelElement, Cs> {
+    using element<"label", ::ht::interface::HTMLLabelElement, Cs>::element;
+};
+template <class ...T> label(T&& ...t) -> label<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct input: public element<"input", ::ht::interface::HTMLInputElement, Cs> {
+    using element<"input", ::ht::interface::HTMLInputElement, Cs>::element;
+};
+template <class ...T> input(T&& ...t) -> input<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct button: public element<"button", ::ht::interface::HTMLButtonElement, Cs> {
+    using element<"button", ::ht::interface::HTMLButtonElement, Cs>::element;
+};
+template <class ...T> button(T&& ...t) -> button<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct select: public element<"select", ::ht::interface::HTMLSelectElement, Cs> {
+    using element<"select", ::ht::interface::HTMLSelectElement, Cs>::element;
+};
+template <class ...T> select(T&& ...t) -> select<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct datalist: public element<"datalist", ::ht::interface::HTMLDataListElement, Cs> {
+    using element<"datalist", ::ht::interface::HTMLDataListElement, Cs>::element;
+};
+template <class ...T> datalist(T&& ...t) -> datalist<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct optgroup: public element<"optgroup", ::ht::interface::HTMLOptGroupElement, Cs> {
+    using element<"optgroup", ::ht::interface::HTMLOptGroupElement, Cs>::element;
+};
+template <class ...T> optgroup(T&& ...t) -> optgroup<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct option: public element<"option", ::ht::interface::HTMLOptionElement, Cs> {
+    using element<"option", ::ht::interface::HTMLOptionElement, Cs>::element;
+};
+template <class ...T> option(T&& ...t) -> option<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct textarea: public element<"textarea", ::ht::interface::HTMLTextAreaElement, Cs> {
+    using element<"textarea", ::ht::interface::HTMLTextAreaElement, Cs>::element;
+};
+template <class ...T> textarea(T&& ...t) -> textarea<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct output: public element<"output", ::ht::interface::HTMLOutputElement, Cs> {
+    using element<"output", ::ht::interface::HTMLOutputElement, Cs>::element;
+};
+template <class ...T> output(T&& ...t) -> output<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct progress: public element<"progress", ::ht::interface::HTMLProgressElement, Cs> {
+    using element<"progress", ::ht::interface::HTMLProgressElement, Cs>::element;
+};
+template <class ...T> progress(T&& ...t) -> progress<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct meter: public element<"meter", ::ht::interface::HTMLMeterElement, Cs> {
+    using element<"meter", ::ht::interface::HTMLMeterElement, Cs>::element;
+};
+template <class ...T> meter(T&& ...t) -> meter<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct fieldset: public element<"fieldset", ::ht::interface::HTMLFieldSetElement, Cs> {
+    using element<"fieldset", ::ht::interface::HTMLFieldSetElement, Cs>::element;
+};
+template <class ...T> fieldset(T&& ...t) -> fieldset<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct legend: public element<"legend", ::ht::interface::HTMLLegendElement, Cs> {
+    using element<"legend", ::ht::interface::HTMLLegendElement, Cs>::element;
+};
+template <class ...T> legend(T&& ...t) -> legend<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct details: public element<"details", ::ht::interface::HTMLDetailsElement, Cs> {
+    using element<"details", ::ht::interface::HTMLDetailsElement, Cs>::element;
+};
+template <class ...T> details(T&& ...t) -> details<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct dialog: public element<"dialog", ::ht::interface::HTMLDialogElement, Cs> {
+    using element<"dialog", ::ht::interface::HTMLDialogElement, Cs>::element;
+};
+template <class ...T> dialog(T&& ...t) -> dialog<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct script: public element<"script", ::ht::interface::HTMLScriptElement, Cs> {
+    using element<"script", ::ht::interface::HTMLScriptElement, Cs>::element;
+};
+template <class ...T> script(T&& ...t) -> script<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct slot: public element<"slot", ::ht::interface::HTMLSlotElement, Cs> {
+    using element<"slot", ::ht::interface::HTMLSlotElement, Cs>::element;
+};
+template <class ...T> slot(T&& ...t) -> slot<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct canvas: public element<"canvas", ::ht::interface::HTMLCanvasElement, Cs> {
+    using element<"canvas", ::ht::interface::HTMLCanvasElement, Cs>::element;
+};
+template <class ...T> canvas(T&& ...t) -> canvas<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct applet: public element<"applet", ::ht::interface::HTMLUnknownElement, Cs> {
+    using element<"applet", ::ht::interface::HTMLUnknownElement, Cs>::element;
+};
+template <class ...T> applet(T&& ...t) -> applet<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct bgsound: public element<"bgsound", ::ht::interface::HTMLUnknownElement, Cs> {
+    using element<"bgsound", ::ht::interface::HTMLUnknownElement, Cs>::element;
+};
+template <class ...T> bgsound(T&& ...t) -> bgsound<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct isindex: public element<"isindex", ::ht::interface::HTMLUnknownElement, Cs> {
+    using element<"isindex", ::ht::interface::HTMLUnknownElement, Cs>::element;
+};
+template <class ...T> isindex(T&& ...t) -> isindex<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct keygen: public element<"keygen", ::ht::interface::HTMLUnknownElement, Cs> {
+    using element<"keygen", ::ht::interface::HTMLUnknownElement, Cs>::element;
+};
+template <class ...T> keygen(T&& ...t) -> keygen<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct nextid: public element<"nextid", ::ht::interface::HTMLUnknownElement, Cs> {
+    using element<"nextid", ::ht::interface::HTMLUnknownElement, Cs>::element;
+};
+template <class ...T> nextid(T&& ...t) -> nextid<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct blink: public element<"blink", ::ht::interface::HTMLUnknownElement, Cs> {
+    using element<"blink", ::ht::interface::HTMLUnknownElement, Cs>::element;
+};
+template <class ...T> blink(T&& ...t) -> blink<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct multicol: public element<"multicol", ::ht::interface::HTMLUnknownElement, Cs> {
+    using element<"multicol", ::ht::interface::HTMLUnknownElement, Cs>::element;
+};
+template <class ...T> multicol(T&& ...t) -> multicol<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct spacer: public element<"spacer", ::ht::interface::HTMLUnknownElement, Cs> {
+    using element<"spacer", ::ht::interface::HTMLUnknownElement, Cs>::element;
+};
+template <class ...T> spacer(T&& ...t) -> spacer<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct dir: public element<"dir", ::ht::interface::HTMLDirectoryElement, Cs> {
+    using element<"dir", ::ht::interface::HTMLDirectoryElement, Cs>::element;
+};
+template <class ...T> dir(T&& ...t) -> dir<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct frame: public element<"frame", ::ht::interface::HTMLFrameElement, Cs> {
+    using element<"frame", ::ht::interface::HTMLFrameElement, Cs>::element;
+};
+template <class ...T> frame(T&& ...t) -> frame<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct frameset: public element<"frameset", ::ht::interface::HTMLFrameSetElement, Cs> {
+    using element<"frameset", ::ht::interface::HTMLFrameSetElement, Cs>::element;
+};
+template <class ...T> frameset(T&& ...t) -> frameset<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct param: public element<"param", ::ht::interface::HTMLParamElement, Cs> {
+    using element<"param", ::ht::interface::HTMLParamElement, Cs>::element;
+};
+template <class ...T> param(T&& ...t) -> param<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct font: public element<"font", ::ht::interface::HTMLFontElement, Cs> {
+    using element<"font", ::ht::interface::HTMLFontElement, Cs>::element;
+};
+template <class ...T> font(T&& ...t) -> font<typename ::ht::detail::child_types<T...>>;
+
+template <class Cs> struct marquee: public element<"marquee", ::ht::interface::HTMLMarqueeElement, Cs> {
+    using element<"marquee", ::ht::interface::HTMLMarqueeElement, Cs>::element;
+};
+template <class ...T> marquee(T&& ...t) -> marquee<typename ::ht::detail::child_types<T...>>;
+
