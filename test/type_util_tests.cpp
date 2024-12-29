@@ -51,7 +51,6 @@ TEST(TupleRange) {
     STATIC_EXPECT_TRUE((std::is_same_v<std::iter_reference_t<decltype(it2)>, T1*&>));
 
     EXPECT(it2[0], std::equal_to, &t1);
-    EXPECT(it2[1], std::equal_to, &t2);
 };
 
 TEST(TupleRangeStringView) {

@@ -53,31 +53,19 @@ namespace detail {
 template <class UT, class Seq> class tuple_range;
 template <class UT, std::size_t... I> class tuple_range<UT, std::index_sequence<I...>> {
     using uniform_type = UT;
-    using storage_type = std::conditional_t<std::is_trivially_copyable_v<uniform_type>, uniform_type,
-                                            std::add_pointer_t<uniform_type>>;
+    using storage_type = std::reference_wrapper<uniform_type>;
+
     static constexpr auto size = sizeof...(I);
 
-    static constexpr storage_type store(auto&& v) {
-        if constexpr (std::is_trivially_copyable_v<uniform_type>) {
-            return static_cast<storage_type>(v);
-        } else {
-            return static_cast<storage_type>(&v);
-        }
-    }
+    static constexpr storage_type store(auto& v) { return std::ref(v); }
 
-    std::array<storage_type, size> ptrs;
+    std::array<storage_type, size> refs;
 
     class iterator {
-        using wrapped_iterator = decltype(ptrs.begin());
+        using wrapped_iterator = decltype(refs.begin());
         wrapped_iterator it;
 
-        static constexpr auto& get(const wrapped_iterator& it) {
-            if constexpr (std::is_trivially_copyable_v<uniform_type>) {
-                return *it;
-            } else {
-                return **it;
-            }
-        }
+        static constexpr uniform_type& get(const wrapped_iterator& it) { return (*it).get(); }
 
     public:
         using value_type = UT;
@@ -138,21 +126,21 @@ template <class UT, std::size_t... I> class tuple_range<UT, std::index_sequence<
     };
 
 public:
-    template <class Tuple> constexpr explicit tuple_range(Tuple&& tuple): ptrs{ store(std::get<I>(tuple))... } {};
+    template <class Tuple> constexpr explicit tuple_range(Tuple&& tuple): refs{ store(std::get<I>(tuple))... } {};
 
-    constexpr auto begin() { return iterator{ ptrs.begin() }; }
-    constexpr auto begin() const { return iterator{ ptrs.begin() }; }
-    constexpr auto end() { return iterator{ ptrs.end() }; }
-    constexpr auto end() const { return iterator{ ptrs.end() }; }
+    constexpr auto begin() { return iterator{ refs.begin() }; }
+    constexpr auto begin() const { return iterator{ refs.begin() }; }
+    constexpr auto end() { return iterator{ refs.end() }; }
+    constexpr auto end() const { return iterator{ refs.end() }; }
 };
 
 namespace detail {
     template <class UT> class tuple_view_helper {
-        template <class From> struct is_convertible_functor: std::is_convertible<From, UT> { };
+        template <class T> struct is_ut_functor: std::is_same<T, UT> { };
 
     public:
         template <template <class...> class Tuple, class... T> constexpr auto operator()(Tuple<T...>& tuple) {
-            return tuple_range<UT, detail::filtered_index_sequence<is_convertible_functor, T...>>{ tuple };
+            return tuple_range<UT, detail::filtered_index_sequence<is_ut_functor, T...>>{ tuple };
         }
     };
 } // namespace detail
