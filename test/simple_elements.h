@@ -2,6 +2,7 @@
 #define HTELEM_SIMPLE_ELEMENTS_H
 
 #include <htelem/element.h>
+#include <type_traits>
 
 struct y {
     char c;

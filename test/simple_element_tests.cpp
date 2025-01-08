@@ -1,5 +1,6 @@
 #include "testing.h"
 #include "simple_elements.h"
+#include <type_traits>
 
 using namespace ht;
 using namespace ht::ml;
@@ -23,7 +24,9 @@ TEST(SimpleElementsWithAttributes) {
 
 TEST(SimpleElementsWithChildren) { 
     using parent_type = decltype(parent { _aaa = "parent argument", child { _aaa = "child argument" } }); 
+    using child_type = decltype(child{ _aaa = "child argument" });
     using parent_set_attr_type = parent_type::set_attrs_tuple;
+    static_assert(std::is_nothrow_copy_constructible_v<child_type>);
 
     static constexpr auto x = parent { _aaa = "parent argument", child { _aaa = "child argument" } };
     static constexpr auto z = child { _aaa = "test", y{ 'r' } };

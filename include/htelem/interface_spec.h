@@ -18,7 +18,7 @@ template <static_string In, class... Parents, auto... Attrs>
 struct combined_interface_attrs<interface_spec<In, std::tuple<Parents...>, Attrs...>> {
     static constexpr auto value =
             std::tuple_cat(get_interface_attrs<interface_spec<In, std::tuple<Parents...>, Attrs...>>::value,
-                           get_interface_attrs<Parents>::value...);
+                    get_interface_attrs<Parents>::value...);
 };
 template <class Spec> constexpr auto combined_interface_attrs_v = combined_interface_attrs<Spec>::value;
 
@@ -37,8 +37,8 @@ struct interface_spec<In, std::tuple<Parents...>, A...> {
     using parent_types = std::tuple<Parents...>;
 
     template <class... T> static constexpr auto make(attribute_list<In>& list, T&&... t) {
-        return detail::initialize_attribute(list, std::tuple_cat(ptrs, inherited_ptrs), std::make_tuple(),
-                                            std::make_tuple(), std::forward<T>(t)...);
+        return detail::initialize_aspect(list, std::tuple_cat(ptrs, inherited_ptrs), std::make_tuple(),
+                std::make_tuple(), std::forward<T>(t)...);
     }
 };
 } // namespace ht

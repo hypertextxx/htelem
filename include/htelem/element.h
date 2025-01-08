@@ -20,13 +20,14 @@ struct element<Tag, interface_spec<In, Parent, Attrs...>, std::tuple<Aspects...>
 
     element_aspects<set_attrs_tuple, children_tuple> aspects;
 
-    template <class... T>
-        requires(sizeof...(Aspects) > 0)
-    constexpr explicit element(T&&... t)
-        : attribute_list<In>{}, aspects{ (interface::make(*this, detail::cstr_to_sv(std::forward<T>(t))...)) } { }
+    constexpr element(const element& other) = default;
+    constexpr element(element&& other) = default;
 
-    template <class... T>
-        requires(sizeof...(Aspects) == 0)
+    template <class... T> requires(sizeof...(Aspects) > 0)
+    constexpr explicit element(T&&... t)
+        : attribute_list<In>{}, aspects{(interface::make(*this, detail::cstr_to_sv(std::forward<T>(t))...))} { }
+
+    template <class... T> requires(sizeof...(Aspects) == 0)
     constexpr explicit element(T&&... t): attribute_list<In>{} {
         interface::make(*this, std::forward<T>(t)...);
     }

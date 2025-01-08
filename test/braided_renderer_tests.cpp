@@ -53,3 +53,15 @@ TEST(BraidedBasicFullPage) {
 </html>)"sv);
 };
 
+static constexpr auto div_with_events = ml::div{
+    _onclick = [i=0] mutable { ++i; },
+    "contents"sv
+};
+static constexpr auto div_with_events_html = braided_renderer::static_html<div_with_events>;
+TEST(DivWithEvents) {
+    EXPECT(div_with_events_html, std::equal_to, R"(<div>
+    <!-- invocable -->
+    contents
+</div>)"sv);
+};
+

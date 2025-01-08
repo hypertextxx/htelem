@@ -11,15 +11,15 @@ struct render_decoration {
 };
 
 namespace detail {
-    template <std::size_t Depth> consteval auto make_indent() {
-        std::array<char, 1 + Depth * 4> s{};
-        s.fill(' ');
-        s.back() = '\0';
-        return s;
-    }
+template <std::size_t Depth> consteval auto make_indent() {
+    std::array<char, 1 + Depth * 4> s{};
+    s.fill(' ');
+    s.back() = '\0';
+    return s;
+}
 
-    template <std::size_t Depth> constexpr auto indent_string = static_string<Depth * 4>{ make_indent<Depth>() };
-    template <> constexpr static_string indent_string<0> = static_string{ "" };
+template <std::size_t Depth> constexpr auto indent_string = static_string<Depth * 4>{make_indent<Depth>()};
+template <> constexpr static_string indent_string<0> = static_string{""};
 } // namespace detail
 
 template <std::size_t Depth> constexpr std::string_view indent() {
