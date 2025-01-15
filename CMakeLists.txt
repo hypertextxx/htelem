@@ -5,7 +5,7 @@ project(htelem)
 set(CMAKE_CXX_STANDARD 26)
 
 set(HTELEM_HEADER_PATH "${CMAKE_SOURCE_DIR}/include/htelem")
-set(HTELEM_SOURCES "${HTELEM_HEADER_PATH}/attribute_list.h" "${HTELEM_HEADER_PATH}/braid.h" "${HTELEM_HEADER_PATH}/braided_renderer.h" "${HTELEM_HEADER_PATH}/element.h" "${HTELEM_HEADER_PATH}/html.h" "${HTELEM_HEADER_PATH}/html_event.h" "${HTELEM_HEADER_PATH}/input.h" "${HTELEM_HEADER_PATH}/window.h" "${HTELEM_HEADER_PATH}/interface_spec.h" "${HTELEM_HEADER_PATH}/render_common.h" "${HTELEM_HEADER_PATH}/static_string.h" "${HTELEM_HEADER_PATH}/util.h")
+file(GLOB_RECURSE HTELEM_SOURCES "${HTELEM_HEADER_PATH}/*.h")
 
 set(HTELEM_AUTOGEN_DIR "${CMAKE_SOURCE_DIR}/tools/htelem-autogen")
 
@@ -35,6 +35,14 @@ endif()
 target_include_directories(htelem INTERFACE ${CMAKE_SOURCE_DIR}/include)
 add_dependencies(htelem ht-defs)
 warn_format(htelem "${HTELEM_SOURCES}")
+
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+    set(DOXYGEN_MULTILINE_CPP_IS_BRIEF 1)
+    set(DOXYGEN_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/docs")
+    set(DOXYGEN_TAGFILES "${CMAKE_SOURCE_DIR}/docs/cppreference-doxygen-web.tag.xml=https://en.cppreference.com/w/")
+    doxygen_add_docs(docs "${HTELEM_SOURCES}")
+endif()
 
 add_definitions(-DHTELEM_VERBOSE_TESTS)
 add_subdirectory(test/)

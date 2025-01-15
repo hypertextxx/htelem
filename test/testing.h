@@ -2,12 +2,14 @@
 #define HTELEM_TESTING_H
 
 #include <type_traits>
-#include <iostream>
 #include <functional>
 #include <htelem/util.h>
+#include <print>
 
 namespace testing {
     using ht::static_string;
+    constexpr auto preformat_test_value(const auto& t) { return t; }
+    inline auto preformat_test_value(auto* t) { return std::bit_cast<uintptr_t>(t); }
 
     struct controller {
         const std::string_view name;
@@ -20,15 +22,15 @@ namespace testing {
             static_assert(std::is_convertible_v<R, L>);
             using namespace std;
             if (!Checker<L>{ }(actual, expected)) {
-                std::cerr << "  failed: " << expr << std::endl << "    expected: " << expected << std::endl << "    actual: " << actual << std::endl;
+                std::print(stderr, "  failed: {}\n    expected: {}\n   actual: {}\n", expr, preformat_test_value(expected), preformat_test_value(actual));
                 failures++;
                 return false;
             }
 #ifdef HTELEM_VERBOSE_TESTS
             else {
-                std::cout << "  passed: " << expr << std::endl;
+                std::print("  passed: {}\n", expr);
                 if (!std::is_same_v<std::decay_t<L>, bool>) {
-                    std::cout << "    value: " << actual << std::endl;
+                    std::print("    value: {}\n", preformat_test_value(actual));
                 }
             }
 #endif

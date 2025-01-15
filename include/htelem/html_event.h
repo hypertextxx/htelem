@@ -1,16 +1,18 @@
 #ifndef HTELEM_HTML_EVENT_H
 #define HTELEM_HTML_EVENT_H
 
-#include "htelem/element.h"
-#include "htelem/input.h"
-#include "htelem/static_string.h"
+#include "_utilities/static_string.h"
+#include "element.h"
+#include "input.h"
 #include <chrono>
+#include <concepts>
 #include <functional>
 
 namespace ht {
 
-enum event_phase { NONE = 0, CAPTURING_PHASE, AT_TARGET, BUBBLING_PHASE };
+enum event_phase { NONE = 0, CAPTURING, AT_TARGET, BUBBLING };
 
+/// Base type for built-in HTML events.
 template <static_string Name> struct html_event {
     static constexpr std::string_view name = Name;
 
@@ -22,17 +24,22 @@ template <static_string Name> struct html_event {
     const std::chrono::milliseconds timestamp;
 };
 
+/// Retrieves the name of an event, e.g. `onclick`. User-defined events should provide  their own specialization of
+/// `html_event_name`.
 template <class Event> struct html_event_name;
 template <static_string Name> struct html_event_name<html_event<Name>> {
     static constexpr std::string_view value = Name;
 };
-template <class Event> constexpr auto html_event_name_v = html_event_name<std::decay_t<Event>>::value;
 
-template <class T, static_string Name> concept event_named = requires {
-    typename html_event_name<T>;
-    html_event_name_v<T> == Name;
+/// Specifies that there is a specialization of \ref ht::html_event_name that can be used to retrieve the name of `T`.
+template <class T> concept named_event = requires {
+    { html_event_name<T>::value } -> std::equality_comparable_with<std::string_view>;
 };
 
+/// Specifies that `T` models \ref ht::named_event and that the name of `T` is `Name`.
+template <class T, static_string Name> concept event_named = named_event<T> and html_event_name<T>::value == Name;
+
+/// Base type for HTML UI events.
 template <static_string Name, class Window> struct ui_event: html_event<Name> {
     Window& window;
 };
@@ -74,18 +81,48 @@ UI_EVENT_DECL(keyboard_event): ui_event<Name, Window> {
 
 #undef UI_EVENT_DECL
 
-template <class T, class Event> constexpr decltype(auto) propagate_event(const T& to, Event&& event) {
-    if constexpr (is_element_type_v<T>) {
+/// Emits an event to a partiuclar element or receiver. If `T` models \ref std::invocable<Event&&>, then \p to is
+/// invoked with \p event as a forwarded argument. If `T` models \ref ht::element_type, then any child of \p to which
+/// models `std::invocable<Event&&>` is invoked likewise.
+template <class T, class Event> constexpr decltype(auto) emit_event(const T& to, Event&& event) {
+    if constexpr (element_type<T>) {
         std::apply([&event]<class... Children>(Children&... children) {
-            ((propagate_event(children, std::forward<Event>(event))), ...);
+            ((emit_event(children, std::forward<Event>(event))), ...);
         }, to.children());
     }
 
-    if constexpr (std::is_invocable_v<T, Event&>) {
+    if constexpr (std::invocable<T, Event&&>) {
         std::invoke(to, std::forward<Event>(event));
     }
     return std::forward<Event>(event);
 }
+
+/// A type that is invocable with argument type `Ev&&` if and only if `Func` is and `Ev` satisfies
+/// `ht::event_named<Trigger>`.
+template <static_string Trigger, class Func> struct filtered_event_receiver {
+    static constexpr auto trigger_name = Trigger;
+
+    Func func;
+    template <event_named<Trigger> Ev> constexpr decltype(auto) operator()(Ev&& event) const {
+        return std::invoke(func, std::forward<Ev>(event));
+    }
+};
+
+struct event_handler_attr_type { };
+
+template <static_string At, class... T> struct attribute_spec;
+
+/**
+ * \brief Explicit specialization for event handler attributes.
+ *
+ * Attributes in an element definition of the form `_onclick = [](auto&& event){ }` will be converted to children of the
+ * element with the type \ref ht::filtered_event_receiver "ht::filtered_event_receiver<\"onclick\", LAMBDA>".
+ */
+template <static_string At> struct attribute_spec<At, event_handler_attr_type> {
+    template <class Func> constexpr auto operator=(Func&& func) const {
+        return filtered_event_receiver<At, Func>{std::forward<Func>(func)};
+    }
+};
 
 } // namespace ht
 

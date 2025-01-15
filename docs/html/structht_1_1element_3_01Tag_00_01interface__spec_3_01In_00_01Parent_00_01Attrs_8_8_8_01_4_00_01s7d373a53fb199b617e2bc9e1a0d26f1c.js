@@ -1,0 +1,6 @@
+var structht_1_1element_3_01Tag_00_01interface__spec_3_01In_00_01Parent_00_01Attrs_8_8_8_01_4_00_01s7d373a53fb199b617e2bc9e1a0d26f1c =
+[
+    [ "element", "structht_1_1element_3_01Tag_00_01interface__spec_3_01In_00_01Parent_00_01Attrs_8_8_8_01_4_00_01s7d373a53fb199b617e2bc9e1a0d26f1c.html#a35f757f68d1d267301b5126f3e68e7b6", null ],
+    [ "children", "structht_1_1element_3_01Tag_00_01interface__spec_3_01In_00_01Parent_00_01Attrs_8_8_8_01_4_00_01s7d373a53fb199b617e2bc9e1a0d26f1c.html#ae701b516f52efe6f03f2b6ebabd5c8a8", null ],
+    [ "set_attrs", "structht_1_1element_3_01Tag_00_01interface__spec_3_01In_00_01Parent_00_01Attrs_8_8_8_01_4_00_01s7d373a53fb199b617e2bc9e1a0d26f1c.html#a77f62c578868e97c2bcf419a7db154fb", null ]
+];

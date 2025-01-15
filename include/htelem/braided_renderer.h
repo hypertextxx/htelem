@@ -4,6 +4,7 @@
 #include "attribute_list.h"
 #include "braid.h"
 #include "element.h"
+#include "htelem/html_event.h"
 #include "interface_spec.h"
 #include "render_common.h"
 #include <tuple>
@@ -74,10 +75,11 @@ struct braided_renderer {
         }
     }
 
-    template <std::size_t Depth = 0, class... Args>
-    constexpr sv_braid auto render(const std::invocable<Args...> auto& t, const render_decoration&& dec = {}) const {
-        auto b1 = braid{std::move(dec.pre), "<!-- invocable -->"sv};
-        return std::move(b1) + std::move(dec.post);
+    template <std::size_t Depth = 0, static_string Trigger, class F>
+    constexpr sv_braid auto render(const filtered_event_receiver<Trigger, F>& t,
+            const render_decoration&& dec = {}) const {
+        auto b1 = braid{std::move(dec.pre), "<!-- "sv};
+        return std::move(b1) + braid{static_cast<std::string_view>(Trigger), " -->"sv} + std::move(dec.post);
     }
 
     template <class Element> static constexpr auto render_element(const Element& el) {

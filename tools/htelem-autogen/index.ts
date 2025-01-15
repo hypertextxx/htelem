@@ -11,7 +11,7 @@ const typeMap = {
     "unrestricted double": "double",
     "long": "long",
     "unsigned long": "unsigned long",
-    "EventHandler": "::ht::identity_attr_type"
+    "EventHandler": "::ht::event_handler_attr_type"
 }
 
 const skipInterfaces = new Set(["HTMLTemplateElement", "HTMLTrackElement"]);

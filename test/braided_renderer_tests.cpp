@@ -37,7 +37,7 @@ static constexpr auto basic_full_page = html{
         }
     }
 };
-static constexpr auto  basic_full_page_html __attribute__((section("ht:basic_full_page.html"))) = braided_renderer::static_html<basic_full_page>; 
+static constexpr auto basic_full_page_html = braided_renderer::static_html<basic_full_page>; 
 TEST(BraidedBasicFullPage) {
     EXPECT(basic_full_page_html, std::equal_to, R"(<html>
     <head>
@@ -60,7 +60,7 @@ static constexpr auto div_with_events = ml::div{
 static constexpr auto div_with_events_html = braided_renderer::static_html<div_with_events>;
 TEST(DivWithEvents) {
     EXPECT(div_with_events_html, std::equal_to, R"(<div>
-    <!-- invocable -->
+    <!-- onclick -->
     contents
 </div>)"sv);
 };

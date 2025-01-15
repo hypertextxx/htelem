@@ -1,8 +1,7 @@
 #ifndef HTELEM_RENDER_COMMON_H
 #define HTELEM_RENDER_COMMON_H
 
-#include "static_string.h"
-#include <string_view>
+#include "util.h"
 
 namespace ht {
 struct render_decoration {
@@ -19,7 +18,7 @@ template <std::size_t Depth> consteval auto make_indent() {
 }
 
 template <std::size_t Depth> constexpr auto indent_string = static_string<Depth * 4>{make_indent<Depth>()};
-template <> constexpr static_string indent_string<0> = static_string{""};
+template <> constexpr inline static_string indent_string<0> = static_string{""};
 } // namespace detail
 
 template <std::size_t Depth> constexpr std::string_view indent() {

@@ -1,0 +1,7 @@
+<map id="ht::element&lt; Tag, interface_spec&lt; In, Parent, Attrs... &gt;, std::tuple&lt; Aspects... &gt; &gt;" name="ht::element&lt; Tag, interface_spec&lt; In, Parent, Attrs... &gt;, std::tuple&lt; Aspects... &gt; &gt;">
+<area shape="rect" id="Node000001" title="Base type for all elements." alt="" coords="48,128,239,187"/>
+<area shape="rect" id="Node000002" href="$structht_1_1attribute__list.html" title="Template for all attribute lists." alt="" coords="5,13,117,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,67,126,126,122,129,81,70"/>
+<area shape="rect" id="Node000003" href="$structht_1_1element__aspects.html" title=" " alt="" coords="140,5,312,64"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="201,78,166,129,161,126,196,75"/>
+</map>
