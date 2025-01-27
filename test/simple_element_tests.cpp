@@ -31,8 +31,8 @@ TEST(SimpleElementsWithChildren) {
     static constexpr auto x = parent { _aaa = "parent argument", child { _aaa = "child argument" } };
     static constexpr auto z = child { _aaa = "test", y{ 'r' } };
 
-    EXPECT(std::get<0>(x.children()).aaa(), std::equal_to, "child argument");
+    EXPECT(std::get<0>(x.children).aaa(), std::equal_to, "child argument");
     EXPECT(std::tuple_size_v<decltype(z)::set_attrs_tuple>, std::equal_to, 1);
-    EXPECT(std::get<0>(z.children()).c, std::equal_to, 'r');
+    EXPECT(std::get<0>(z.children).c, std::equal_to, 'r');
 };
 

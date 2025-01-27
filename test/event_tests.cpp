@@ -12,7 +12,7 @@ TEST(BasicEventPropagation) {
     html_event<"fake"> event{ };
 
     using fake_event_type = decltype(event);
-    using receiver_type = std::decay_t<decltype(std::get<0>(basic_element.children()))>;
+    using receiver_type = std::decay_t<decltype(std::get<0>(basic_element.children))>;
     
     STATIC_EXPECT_TRUE((receiver_type::trigger_name == "onclick"));
     STATIC_EXPECT_TRUE((event_named<fake_event_type, "fake">));

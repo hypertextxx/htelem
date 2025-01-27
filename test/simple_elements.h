@@ -2,10 +2,11 @@
 #define HTELEM_SIMPLE_ELEMENTS_H
 
 #include <htelem/element.h>
-#include <type_traits>
 
 struct y {
     char c;
+
+    constexpr auto operator<=>(const y& other) const = default;
 };
 
 namespace ht {
@@ -35,20 +36,21 @@ namespace ht {
     }
 
     namespace ml {
-        template <class Cs> struct parent: public element<"parent", ::ht::interface::Parent, Cs> {
-            using element<"parent", ::ht::interface::Parent , Cs>::element;
+        template <class ...Aspects> struct parent: public element<"parent", ::ht::interface::Parent, Aspects...> {
+            using element<"parent", ::ht::interface::Parent , Aspects...>::element;
         };
-        template <class ...T> parent(T&& ...t) -> parent<typename ::ht::detail::child_types<T...>>;
+        template <class ...Aspects> parent(Aspects&&...) -> parent<Aspects...>;
 
-        template <class Cs> struct child: public element<"child", ::ht::interface::Child, Cs> {
-            using element<"child", ::ht::interface::Child , Cs>::element;
+        template <class ...Aspects> struct child: public element<"child", ::ht::interface::Child, Aspects...> {
+            using element<"child", ::ht::interface::Child , Aspects...>::element;
         };
-        template <class ...T> child(T&& ...t) -> child<typename ::ht::detail::child_types<T...>>;
+        template <class ...Aspects> child(Aspects&&...) -> child<Aspects...>;
 
-        template <class Cs> struct child2: public element<"child", ::ht::interface::Child2, Cs> {
-            using element<"child", ::ht::interface::Child2 , Cs>::element;
+        template <class ...Aspects> struct child2: public element<"child", ::ht::interface::Child2, Aspects...> {
+            using element<"child", ::ht::interface::Child2 , Aspects...>::element;
         };
-        template <class ...T> child2(T&& ...t) -> child2<typename ::ht::detail::child_types<T...>>;
+        template <class ...Aspects> child2(Aspects&&...) -> child2<Aspects...>;
+
     }
 }
 

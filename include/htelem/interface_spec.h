@@ -43,6 +43,9 @@ template <class... AttrAspects, class Interface> struct extract_attr_ptrs<std::t
             detail::find_attr_holder_in_tuple<AttrAspects, std::decay_t<decltype(combined)>>::interface_name>::*...>;
 };
 
+template <class Attr, class Spec> using attr_to_mem_ptr_t = Attr attribute_list<detail::find_attr_holder_in_tuple<Attr,
+        std::decay_t<decltype(combined_interface_attrs_v<Spec>)>>::interface_name>::*;
+
 template <static_string In, class... AttrType, class... Parents, AttrType attribute_list<In>::*... A>
 struct interface_spec<In, std::tuple<Parents...>, A...> {
     static constexpr auto name = In;
@@ -52,7 +55,7 @@ struct interface_spec<In, std::tuple<Parents...>, A...> {
 
     template <class... T> static constexpr auto make(attribute_list<In>& list, T&&... t) {
         return detail::initialize_aspect(list, std::tuple_cat(ptrs, inherited_ptrs), std::make_tuple(),
-                std::make_tuple(), std::forward<T>(t)...);
+                std::forward<T>(t)...);
     }
 };
 } // namespace ht

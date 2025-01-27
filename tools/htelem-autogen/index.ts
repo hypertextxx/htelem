@@ -128,12 +128,12 @@ function makeElementSection(defs: IdlInterface[]) {
         const tags = htmlElements.filter(e => e.interface === def.interfaceName).map(e => e.name);
         tags.forEach(tag => {
             count++;
-            elementSection += indent(`template <class Cs> struct ${tag}: public element<"${tag}", ::ht::interface::${def.interfaceName}, Cs> {\n`);
+            elementSection += indent(`template <class ...Aspects> struct ${tag}: public element<"${tag}", ::ht::interface::${def.interfaceName}, Aspects...> {\n`);
             indentLevel++;
-            elementSection += indent(`using element<"${tag}", ::ht::interface::${def.interfaceName}, Cs>::element;\n`);
+            elementSection += indent(`using element<"${tag}", ::ht::interface::${def.interfaceName}, Aspects...>::element;\n`);
             indentLevel--;
             elementSection += "};\n"
-            elementSection += `template <class ...T> ${tag}(T&& ...t) -> ${tag}<typename ::ht::detail::child_types<T...>>;\n\n`
+            elementSection += `template <class ...Aspects> ${tag}(Aspects&&...) -> ${tag}<Aspects...>;\n\n`
         });
     });
     console.log(`found ${count} elements`)

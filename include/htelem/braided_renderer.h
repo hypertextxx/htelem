@@ -36,20 +36,23 @@ struct braided_renderer {
     }
 
     template <std::size_t Depth = 0, static_string Tag, static_string In, class... Parents, auto... Attrs,
-            class... Children>
+            class... Aspects>
     constexpr sv_braid auto render(
-            const element<Tag, interface_spec<In, std::tuple<Parents...>, Attrs...>, std::tuple<Children...>>& el,
+            const element<Tag, interface_spec<In, std::tuple<Parents...>, Attrs...>, Aspects...>& el,
             const render_decoration&& dec = {}) const {
-        using element_type =
-                const element<Tag, interface_spec<In, std::tuple<Parents...>, Attrs...>, std::tuple<Children...>>;
+        using element_type = const element<Tag, interface_spec<In, std::tuple<Parents...>, Attrs...>, Aspects...>;
+        using interface = element_type::interface;
 
-        auto attributes = std::apply([&]<class... A>(const A&... a) {
-            if constexpr (sizeof...(A) > 0) {
-                return (std::move(render(el.*a, {.pre = " "sv})) + ...);
+        auto attributes = [&]<class... SetAttrs>(std::tuple<SetAttrs...> tp) {
+            if constexpr (sizeof...(SetAttrs) > 0) {
+                return (std::move(render(el.*(std::get<attr_to_mem_ptr_t<SetAttrs, interface>>(
+                                                     combined_interface_attrs_v<interface>)),
+                                {.pre = " "sv})) +
+                        ...);
             } else {
                 return braid{""sv};
             }
-        }, el.set_attrs());
+        }(typename element_type::set_attrs_tuple{});
 
         auto tag_in_1 = braid{indent<0>(), "<"sv};
         auto tag_in_2 = std::move(tag_in_1) + static_cast<std::string_view>(Tag);
@@ -64,12 +67,12 @@ struct braided_renderer {
         } else if constexpr (std::tuple_size_v<typename element_type::children_tuple> == 1 &&
                              std::is_convertible_v<std::tuple_element_t<0, typename element_type::children_tuple>,
                                      std::string_view>) {
-            auto b1 = std::move(tag_in) + std::move(render(std::get<0>(el.children())));
+            auto b1 = std::move(tag_in) + std::move(render(std::get<0>(el.children)));
             return std::move(dec.pre) + std::move(b1) + std::move(tag_out) + dec.post;
         } else {
             auto ch = "\n"sv + std::move(std::apply([&]<class... C>(const C&... c) {
                 return (std::move(render<Depth + 1>(c, {.pre = indent<Depth + 1>(), .post = "\n"sv})) + ...);
-            }, el.children()));
+            }, el.children));
             return std::move(dec.pre) + std::move(tag_in) + std::move(ch) + indent<Depth>() + std::move(tag_out) +
                    std::move(dec.post);
         }

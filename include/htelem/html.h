@@ -7,7 +7,9 @@
 
 namespace ht {
 
-struct unimplemented { };
+struct unimplemented {
+    constexpr bool operator==(const unimplemented&) const { return true; }
+};
 
 namespace ml {
 #include "../tools/htelem-autogen/out/attribute_spec.def"

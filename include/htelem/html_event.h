@@ -88,7 +88,7 @@ template <class T, class Event> constexpr decltype(auto) emit_event(const T& to,
     if constexpr (element_type<T>) {
         std::apply([&event]<class... Children>(Children&... children) {
             ((emit_event(children, std::forward<Event>(event))), ...);
-        }, to.children());
+        }, to.children);
     }
 
     if constexpr (std::invocable<T, Event&&>) {
@@ -108,9 +108,11 @@ template <static_string Trigger, class Func> struct filtered_event_receiver {
     }
 };
 
-struct event_handler_attr_type { };
+struct event_handler_attr_type {
+    constexpr bool operator==(const event_handler_attr_type&) const { return false; }
+};
 
-template <static_string At, class... T> struct attribute_spec;
+template <static_string At, attribute_value_type<At>... T> struct attribute_spec;
 
 /**
  * \brief Explicit specialization for event handler attributes.

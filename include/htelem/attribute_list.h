@@ -2,6 +2,7 @@
 #define HTELEM_ATTRIBUTE_LIST_H
 
 #include "util.h"
+#include <concepts>
 #include <type_traits>
 
 namespace ht {
@@ -17,6 +18,14 @@ namespace ht {
  */
 template <static_string In> struct attribute_list;
 
+template <static_string Name, class T> constexpr T attribute_default_v;
+template <static_string Name, std::default_initializable T> constexpr T attribute_default_v<Name, T> = T{};
+
+template <class T, static_string Name> concept attribute_value_type =
+        std::copyable<T> and std::equality_comparable<T> and requires {
+            { attribute_default_v<Name, T> } -> std::convertible_to<T>;
+        };
+
 /**
  * \brief A named attribute which can be supplied to an element.
  *
@@ -27,14 +36,13 @@ template <static_string In> struct attribute_list;
  * \tparam Name the attribute name, e.g. "href" for a link or "onclick" for an event handler.
  * \tparam T the underlying value type.
  */
-template <static_string Name, class T> class attribute {
+template <static_string Name, attribute_value_type<Name> T> class attribute {
     T value;
 
 public:
     static constexpr auto attr_name = Name;
     using attr_type = T;
-    bool initialized = false;
-    constexpr explicit attribute(const T& _value): value{_value}, initialized{true} { }
+    constexpr explicit attribute(const T& _value): value{_value} { }
     constexpr attribute() = default;
 
     constexpr T& operator()() { return value; }
@@ -53,7 +61,7 @@ public:
  * \ref ht::attribute "ht::attribute<title, std::string_view>".
  * If multiple types are permitted, then the returned `attribute` stores an \ref std::variant.
  */
-template <static_string At, class... T> struct attribute_spec {
+template <static_string At, attribute_value_type<At>... T> struct attribute_spec {
     static constexpr auto attr_name = At;
 
 #pragma clang diagnostic push
@@ -63,19 +71,6 @@ template <static_string At, class... T> struct attribute_spec {
         return attribute<At, detail::first_convertible_to_t<U, T...>>{std::forward<U>(u)};
     }
 #pragma clang diagnostic pop
-};
-
-/// Stores the attributes and the children of an element separately.
-template <class AttrsTuple, class ChildrenTuple> struct element_aspects {
-    AttrsTuple set_attrs;
-    ChildrenTuple children;
-
-    constexpr element_aspects(const element_aspects& other) = default;
-    constexpr element_aspects(element_aspects&& other) = default;
-
-    constexpr element_aspects() { }
-    constexpr element_aspects(AttrsTuple&& _set_attrs, ChildrenTuple&& _children)
-        : set_attrs{std::move(_set_attrs)}, children{std::move(_children)} { }
 };
 
 namespace detail {
@@ -121,15 +116,6 @@ struct interface_name_from_ptr<Ptr> {
     static constexpr auto value = In;
 };
 
-template <class T> constexpr auto cstr_to_sv(T&& t) { return std::forward<T>(t); }
-template <std::size_t N> constexpr auto cstr_to_sv(const char (&c)[N]) { return std::string_view{c, N - 1}; }
-
-template <class T> struct child_type_map: std::type_identity<T> { };
-template <std::size_t N> struct child_type_map<const char (&)[N]>: std::type_identity<std::string_view> { };
-template <class T> using child_mapped_type_t = child_type_map<T>::type;
-
-template <class... T> using child_types = std::tuple<child_mapped_type_t<T>...>;
-
 /// Determines if a pack of attribute member pointers `AttrPtrs` contains any attribute with the name `AttrName`.
 template <static_string AttrName, class... AttrPtrs> constexpr bool attributes_contain_v =
         find_attr_holder<AttrName, AttrPtrs...>::value;
@@ -156,14 +142,14 @@ template <static_string AttrName, class... AttrPtrs> constexpr bool attributes_c
  * by an std::tuple<C..., V&&>, where the final element is forwarded from `A`.
  */
 
-template <static_string El, class... AttrPtrs, class... SetAttrs, class... Children>
-constexpr auto initialize_aspect(attribute_list<El>& t, std::tuple<AttrPtrs...> ptrs, std::tuple<SetAttrs...>,
+template <static_string El, class... AttrPtrs, class... Children>
+constexpr auto initialize_aspect(attribute_list<El>& t, std::tuple<AttrPtrs...> ptrs,
         std::tuple<Children...> children) {
-    return element_aspects<std::tuple<>, std::tuple<>>{};
+    return std::tuple<>{};
 }
 
 template <class AttrName, class... AttrPtrs, class V>
-constexpr auto take_attr(auto& t, const std::tuple<AttrPtrs...>& ptrs, auto&& set_attrs, V&& value) {
+constexpr auto take_attr(auto& t, const std::tuple<AttrPtrs...>& ptrs, V&& value) {
     if constexpr (AttrName::value) {
         static_assert(attributes_contain_v<AttrName::name, AttrPtrs...>,
                 "attribute does not apply to the specified element");
@@ -171,9 +157,6 @@ constexpr auto take_attr(auto& t, const std::tuple<AttrPtrs...>& ptrs, auto&& se
 
         using attr_ptr_type = std::remove_reference_t<V> attribute_list<attr_holder>::*;
         t.*(std::get<attr_ptr_type>(ptrs)) = value;
-        return std::tuple_cat(std::move(set_attrs), std::make_tuple(std::get<attr_ptr_type>(ptrs)));
-    } else {
-        return set_attrs;
     }
 };
 
@@ -197,20 +180,19 @@ constexpr auto take_child(auto& t, std::tuple<Children...>&& children, V&& value
  * \tparam AttrPtrs the pack of attribute member pointers combined from the element's interface and its parents
  * \tparam V the type of the aspect currently being initialized
  * \tparam R the pack of aspects yet to be initialized
- * \tparam SetAttrs the pack of attribute member pointers that have already been initialized
  * \tparam Children the pack of children that have already been initialized
  */
-template <static_string In, class... AttrPtrs, class V, class... R, class... SetAttrs, class... Children>
+template <static_string In, class... AttrPtrs, class V, class... R, class... Children>
 constexpr auto initialize_aspect(attribute_list<In>& t, const std::tuple<AttrPtrs...>& ptrs,
-        std::tuple<SetAttrs...>&& set_attrs, std::tuple<Children...>&& children, V&& value, R&&... r) {
+        std::tuple<Children...>&& children, V&& value, R&&... r) {
     using attr_name = get_attribute_name<std::remove_cvref_t<V>>;
 
+    take_attr<attr_name>(t, ptrs, std::forward<V>(value));
+
     if constexpr (sizeof...(R) == 0) {
-        return element_aspects{std::move(take_attr<attr_name>(t, ptrs, set_attrs, std::forward<V>(value))),
-                std::move(take_child<attr_name>(t, std::move(children), std::forward<V>(value)))};
+        return take_child<attr_name>(t, std::move(children), std::forward<V>(value));
     } else {
         return initialize_aspect(t, ptrs,
-                std::move(take_attr<attr_name>(t, ptrs, std::move(set_attrs), std::forward<V>(value))),
                 std::move(take_child<attr_name>(t, std::move(children), std::forward<V>(value))),
                 std::forward<R>(r)...);
     }
