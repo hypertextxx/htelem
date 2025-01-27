@@ -76,6 +76,8 @@ template <std::size_t N, std::invocable<testing::controller&> Func> constexpr au
  * `bool`, such as `std::equal_to`.
  */
 #define EXPECT(actual, comparison, expected) _controller.expect<comparison>(actual, expected, #actual " " #comparison " " #expected)
+#define STATIC_EXPECT(actual, comparison, expected) static_assert(comparison{ }(actual, expected)); EXPECT(actual, comparison, expected)
+
 #define REQUIRE_TRUE(cond) do { if (!EXPECT_TRUE(cond)) return; } while(0)
 #define REQUIRE(actual, comparison, expected) do { if (!EXPECT(actual, comparison, expected)){ return; } } while(0)
 

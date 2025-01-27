@@ -13,18 +13,18 @@ TEST(BraidedSimpleElement) {
     static constexpr auto rendered_text = sv_braid_to_str<rendered_text_size>(rendered_child);
     static constexpr auto text_view = std::string_view { rendered_text };
 
-    EXPECT(rendered_text_size, std::equal_to, 26);
-    EXPECT(text_view, std::equal_to, R"(<child aaa="test"></child>)"sv);
+    STATIC_EXPECT(rendered_text_size, std::equal_to, 26);
+    STATIC_EXPECT(text_view, std::equal_to, R"(<child aaa="test"></child>)"sv);
     
     static constexpr auto x = braided_renderer::render_element(child{ _aaa="test"sv });
     static constexpr auto lit = braid_literal<x>;
-    EXPECT(text_view, std::equal_to, std::string_view{ lit });
+    STATIC_EXPECT(text_view, std::equal_to, std::string_view{ lit });
 };
 
 static constexpr auto embedded_child = child2 { _aaa = "hello"sv, _bbb = "world"sv };
 static constexpr auto embedded_child_html = braided_renderer::static_html<embedded_child>;
 TEST(BraidedEmbeddedElement) {
-    EXPECT(embedded_child_html, std::equal_to, R"(<child aaa="hello" bbb="world"></child>)"sv); 
+    STATIC_EXPECT(embedded_child_html, std::equal_to, R"(<child aaa="hello" bbb="world"></child>)"sv); 
 };
 
 static constexpr auto basic_full_page = html{ 
@@ -39,7 +39,7 @@ static constexpr auto basic_full_page = html{
 };
 static constexpr auto basic_full_page_html = braided_renderer::static_html<basic_full_page>; 
 TEST(BraidedBasicFullPage) {
-    EXPECT(basic_full_page_html, std::equal_to, R"(<html>
+    STATIC_EXPECT(basic_full_page_html, std::equal_to, R"(<html>
     <head>
         <title>test</title>
     </head>
@@ -59,7 +59,7 @@ static constexpr auto div_with_events = ml::div{
 };
 static constexpr auto div_with_events_html = braided_renderer::static_html<div_with_events>;
 TEST(DivWithEvents) {
-    EXPECT(div_with_events_html, std::equal_to, R"(<div>
+    STATIC_EXPECT(div_with_events_html, std::equal_to, R"(<div>
     <!-- onclick -->
     contents
 </div>)"sv);

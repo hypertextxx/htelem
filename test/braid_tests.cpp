@@ -14,7 +14,6 @@ constexpr auto make_non_uniform_braid() {
 TEST(NonUniformBraid) {
     static constexpr auto br = make_non_uniform_braid(); 
     STATIC_EXPECT_TRUE(!br.is_uniform);
-    EXPECT_TRUE(!br.is_uniform);
 };
 
 constexpr auto make_sv_braid_1(){
@@ -27,17 +26,14 @@ constexpr auto make_sv_braid_1(){
 TEST(StringViewBraid1) {
     static constexpr auto br = make_sv_braid_1();
 
-    STATIC_EXPECT_TRUE(br.count() == 3);
-    EXPECT(br.count(), std::equal_to, 3);
+    STATIC_EXPECT(br.count(), std::equal_to, 3);
 
     STATIC_EXPECT_TRUE((std::is_same_v<decltype(br.left), const std::string_view>));
 
     STATIC_EXPECT_TRUE(br.is_uniform);
-    EXPECT_TRUE(br.is_uniform);
     
     static constexpr auto br_size = br.reduce([](std::size_t n, const std::string_view& sv){ return n + sv.size(); }, 0);
-    STATIC_EXPECT_TRUE(br_size == 15);
-    EXPECT(br_size, std::equal_to, 15);
+    STATIC_EXPECT(br_size, std::equal_to, 15);
 };
 
 constexpr auto make_sv_braid_2() {
@@ -51,16 +47,16 @@ constexpr auto make_sv_braid_2() {
 
 TEST(StringViewBraid2){
     static constexpr auto br = make_sv_braid_2();
-    EXPECT(br.count(), std::equal_to, 5);
+    STATIC_EXPECT(br.count(), std::equal_to, 5);
    
     using ty = braid_common_type<std::decay_t<decltype(br)>>::type; 
-    EXPECT_TRUE(br.is_uniform); 
+    STATIC_EXPECT_TRUE(br.is_uniform); 
 
     static constexpr auto array = braid_literal<br>;
 
     static constexpr std::string_view as_sv = braid_literal_view<br>;
-    EXPECT(as_sv.size(), std::equal_to, array.size());
+    STATIC_EXPECT(as_sv.size(), std::equal_to, array.size());
     STATIC_EXPECT_TRUE(as_sv == "there's a place downtown"sv); // where the freaks all come around
-    EXPECT(as_sv, std::equal_to, "there's a place downtown"sv);
+    STATIC_EXPECT(as_sv, std::equal_to, "there's a place downtown"sv);
 };
 
