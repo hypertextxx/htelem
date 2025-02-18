@@ -4,6 +4,7 @@
 
 using namespace ht;
 using namespace ht::ml;
+using namespace std::string_view_literals;
 
 TEST(AttributeSpecsMakeAttributes) {
     STATIC_EXPECT_TRUE((std::is_same_v<decltype(_aaa = "test"), attribute<"aaa", std::string_view>>));
@@ -15,11 +16,10 @@ TEST(SimpleElementsWithAttributes) {
     static constexpr auto x = parent { _aaa = "parent argument" };
     static constexpr auto z = child { _aaa = "test", _bbb = y{ 'c' } };
     static constexpr auto w = child2 { _bbb = "other text" };
-
-    STATIC_EXPECT(x.aaa(), std::equal_to, "parent argument");
-    STATIC_EXPECT(z.aaa(), std::equal_to, "test");
-    STATIC_EXPECT(z.bbb().c, std::equal_to, 'c');
-    STATIC_EXPECT(w.bbb(), std::equal_to, "other text");
+    STATIC_EXPECT(*x.aaa, std::equal_to, "parent argument"sv);
+    STATIC_EXPECT(*z.aaa, std::equal_to, "test"sv);
+    STATIC_EXPECT(z.bbb->c, std::equal_to, 'c');
+    STATIC_EXPECT(*w.bbb, std::equal_to, "other text"sv);
 };
 
 TEST(SimpleElementsWithChildren) { 
@@ -31,7 +31,7 @@ TEST(SimpleElementsWithChildren) {
     static constexpr auto x = parent { _aaa = "parent argument", child { _aaa = "child argument" } };
     static constexpr auto z = child { _aaa = "test", y{ 'r' } };
 
-    STATIC_EXPECT(std::get<0>(x.children).aaa(), std::equal_to, "child argument");
+    STATIC_EXPECT(*std::get<0>(x.children).aaa, std::equal_to, "child argument");
     STATIC_EXPECT(std::tuple_size_v<decltype(z)::set_attrs_tuple>, std::equal_to, 1);
     STATIC_EXPECT(std::get<0>(z.children).c, std::equal_to, 'r');
 };

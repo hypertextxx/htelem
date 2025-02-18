@@ -3,6 +3,7 @@
 
 #include "element.h"
 #include "html_event.h"
+#include "style.h"
 #include <variant>
 
 namespace ht {

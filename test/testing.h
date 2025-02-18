@@ -8,8 +8,8 @@
 
 namespace testing {
     using ht::static_string;
-    constexpr auto preformat_test_value(const auto& t) { return t; }
     inline auto preformat_test_value(auto* t) { return std::bit_cast<uintptr_t>(t); }
+    constexpr auto& preformat_test_value(const auto& t) { return t; }
 
     struct controller {
         const std::string_view name;

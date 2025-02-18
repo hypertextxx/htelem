@@ -22,6 +22,10 @@ template <static_string Name> struct html_event {
     const bool cancelable;
     const bool trusted;
     const std::chrono::milliseconds timestamp;
+
+    constexpr html_event(): bubbles{false}, cancelable{false}, trusted{true}, timestamp{0} { };
+    constexpr html_event(const html_event&) = default;
+    constexpr html_event(html_event&&) = default;
 };
 
 /// Retrieves the name of an event, e.g. `onclick`. User-defined events should provide  their own specialization of
@@ -84,17 +88,23 @@ UI_EVENT_DECL(keyboard_event): ui_event<Name, Window> {
 /// Emits an event to a partiuclar element or receiver. If `T` models \ref std::invocable<Event&&>, then \p to is
 /// invoked with \p event as a forwarded argument. If `T` models \ref ht::element_type, then any child of \p to which
 /// models `std::invocable<Event&&>` is invoked likewise.
-template <class T, class Event> constexpr decltype(auto) emit_event(const T& to, Event&& event) {
+template <class T, class Event, element_type El> constexpr Event&& emit_event(T& to, Event&& event, El& element) {
     if constexpr (element_type<T>) {
-        std::apply([&event]<class... Children>(Children&... children) {
-            ((emit_event(children, std::forward<Event>(event))), ...);
+        std::apply([&to, &event]<class... Children>(Children&... children) {
+            (emit_event(children, std::forward<Event>(event), to), ...);
         }, to.children);
     }
 
-    if constexpr (std::invocable<T, Event&&>) {
-        std::invoke(to, std::forward<Event>(event));
+    if constexpr (requires { to(event); }) {
+        std::invoke(to, event);
+    } else if constexpr (requires { to(event, element); }) {
+        std::invoke(to, event, element);
     }
     return std::forward<Event>(event);
+}
+
+template <class Event> constexpr Event&& emit_event(element_type auto& to, Event&& event) {
+    return std::forward<Event>(emit_event(to, std::forward<Event>(event), to));
 }
 
 /// A type that is invocable with argument type `Ev&&` if and only if `Func` is and `Ev` satisfies
@@ -103,8 +113,10 @@ template <static_string Trigger, class Func> struct filtered_event_receiver {
     static constexpr auto trigger_name = Trigger;
 
     Func func;
-    template <event_named<Trigger> Ev> constexpr decltype(auto) operator()(Ev&& event) const {
-        return std::invoke(func, std::forward<Ev>(event));
+
+    template <event_named<Trigger> Event, class... Args>
+    constexpr std::invoke_result_t<Func, Event&, Args...> operator()(this auto& self, Event& event, Args&&... args) {
+        return std::invoke(self.func, event, std::forward<Args>(args)...);
     }
 };
 

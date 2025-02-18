@@ -4,6 +4,7 @@
 #include "pack_index.h"
 
 namespace ht::detail {
+
 template <class From, class... To> struct first_convertible_to;
 template <class From> struct first_convertible_to<From>: std::false_type { };
 template <class From, class To, class... Tail> struct first_convertible_to<From, To, Tail...>

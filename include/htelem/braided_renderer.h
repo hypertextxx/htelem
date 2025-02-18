@@ -25,11 +25,11 @@ struct braided_renderer {
     }
 
     template <std::size_t Depth = 0, static_string AttrName, class AttrType>
-    constexpr sv_braid auto render(const attribute<AttrName, AttrType>& attr,
-            const render_decoration&& dec = {}) const {
-        auto b1 = braid{std::move(dec.pre), std::move(render(AttrName))};
+    constexpr sv_braid auto render(this auto&& self, const attribute<AttrName, AttrType>& attr,
+            const render_decoration&& dec = {}) {
+        auto b1 = braid{std::move(dec.pre), std::move(self.render(AttrName))};
         auto b2 = std::move(b1) + "=\""sv;
-        auto b3 = std::move(b2) + std::move(render<Depth, AttrType>(attr()));
+        auto b3 = std::move(b2) + std::move(self.template render<Depth, AttrType>(*attr));
         auto b4 = std::move(b3) + "\""sv;
         auto b5 = std::move(b4) + std::move(dec.post);
         return b5;
@@ -37,15 +37,15 @@ struct braided_renderer {
 
     template <std::size_t Depth = 0, static_string Tag, static_string In, class... Parents, auto... Attrs,
             class... Aspects>
-    constexpr sv_braid auto render(
+    constexpr sv_braid auto render(this auto&& self,
             const element<Tag, interface_spec<In, std::tuple<Parents...>, Attrs...>, Aspects...>& el,
-            const render_decoration&& dec = {}) const {
+            const render_decoration&& dec = {}) {
         using element_type = const element<Tag, interface_spec<In, std::tuple<Parents...>, Attrs...>, Aspects...>;
         using interface = element_type::interface;
 
         auto attributes = [&]<class... SetAttrs>(std::tuple<SetAttrs...> tp) {
             if constexpr (sizeof...(SetAttrs) > 0) {
-                return (std::move(render(el.*(std::get<attr_to_mem_ptr_t<SetAttrs, interface>>(
+                return (std::move(self.render(el.*(std::get<attr_to_mem_ptr_t<SetAttrs, interface>>(
                                                      combined_interface_attrs_v<interface>)),
                                 {.pre = " "sv})) +
                         ...);
@@ -67,11 +67,11 @@ struct braided_renderer {
         } else if constexpr (std::tuple_size_v<typename element_type::children_tuple> == 1 &&
                              std::is_convertible_v<std::tuple_element_t<0, typename element_type::children_tuple>,
                                      std::string_view>) {
-            auto b1 = std::move(tag_in) + std::move(render(std::get<0>(el.children)));
+            auto b1 = std::move(tag_in) + std::move(self.render(std::get<0>(el.children)));
             return std::move(dec.pre) + std::move(b1) + std::move(tag_out) + dec.post;
         } else {
             auto ch = "\n"sv + std::move(std::apply([&]<class... C>(const C&... c) {
-                return (std::move(render<Depth + 1>(c, {.pre = indent<Depth + 1>(), .post = "\n"sv})) + ...);
+                return (std::move(self.template render<Depth + 1>(c, {.pre = indent<Depth + 1>(), .post = "\n"sv})) + ...);
             }, el.children));
             return std::move(dec.pre) + std::move(tag_in) + std::move(ch) + indent<Depth>() + std::move(tag_out) +
                    std::move(dec.post);
@@ -80,7 +80,7 @@ struct braided_renderer {
 
     template <std::size_t Depth = 0, static_string Trigger, class F>
     constexpr sv_braid auto render(const filtered_event_receiver<Trigger, F>& t,
-            const render_decoration&& dec = {}) const {
+        const render_decoration&& dec = {}) const {
         auto b1 = braid{std::move(dec.pre), "<!-- "sv};
         return std::move(b1) + braid{static_cast<std::string_view>(Trigger), " -->"sv} + std::move(dec.post);
     }

@@ -2,6 +2,7 @@
 #define HTELEM_ATTRIBUTE_LIST_H
 
 #include "util.h"
+#include <compare>
 #include <concepts>
 #include <type_traits>
 
@@ -40,14 +41,31 @@ template <static_string Name, attribute_value_type<Name> T> class attribute {
     T value;
 
 public:
+    using value_type = T;
     static constexpr auto attr_name = Name;
-    using attr_type = T;
-    constexpr explicit attribute(const T& _value): value{_value} { }
+
+    constexpr attribute(T&& _value): value{std::move(_value)} { }
+    constexpr attribute(const T& _value): value{_value} { }
     constexpr attribute() = default;
 
-    constexpr T& operator()() { return value; }
+    constexpr T& get() { return value; }
+    constexpr const T& get() const { return value; }
+    constexpr auto& operator*(this auto& self) { return self.get(); }
+    constexpr auto operator->(this auto& self) { return std::addressof(self.value); }
 
-    constexpr const T& operator()() const { return value; }
+    template <static_string RN, class RT> constexpr bool operator==(const attribute<RN, RT>& rhs) const {
+        return value == rhs.value;
+    }
+    template <static_string RN, class RT> constexpr auto operator<=>(const attribute<RN, RT>& rhs) const
+            requires(std::three_way_comparable<T>)
+    {
+        return value <=> rhs.value;
+    }
+    constexpr auto operator==(const T& rhs) const { return value == rhs; }
+    constexpr auto operator<=>(const T& rhs) const requires(std::three_way_comparable<T>)
+    {
+        return value <=> rhs;
+    }
 };
 
 /**

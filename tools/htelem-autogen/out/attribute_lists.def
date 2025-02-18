@@ -1,9 +1,12 @@
-template <> struct attribute_list<"Element"> { 
+template <> struct attribute_list<"Element"> {
     attribute<"innerHTML", std::variant<::ht::unimplemented, std::string_view>> innerHTML;
     attribute<"outerHTML", std::variant<::ht::unimplemented, std::string_view>> outerHTML;
+    attribute<"style", ::ht::style<"Element">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"GlobalEventHandlers"> { 
+template <> struct attribute_list<"GlobalEventHandlers"> {
     attribute<"onabort", ::ht::event_handler_attr_type> onabort;
     attribute<"onauxclick", ::ht::event_handler_attr_type> onauxclick;
     attribute<"onbeforeinput", ::ht::event_handler_attr_type> onbeforeinput;
@@ -79,23 +82,32 @@ template <> struct attribute_list<"GlobalEventHandlers"> {
     attribute<"onwebkitanimationstart", ::ht::event_handler_attr_type> onwebkitanimationstart;
     attribute<"onwebkittransitionend", ::ht::event_handler_attr_type> onwebkittransitionend;
     attribute<"onwheel", ::ht::event_handler_attr_type> onwheel;
+    attribute<"style", ::ht::style<"GlobalEventHandlers">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"ElementContentEditable"> { 
+template <> struct attribute_list<"ElementContentEditable"> {
     attribute<"contentEditable", std::string_view> contentEditable;
     attribute<"enterKeyHint", std::string_view> enterKeyHint;
     attribute<"isContentEditable", bool> isContentEditable;
     attribute<"inputMode", std::string_view> inputMode;
+    attribute<"style", ::ht::style<"ElementContentEditable">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLOrSVGElement"> { 
+template <> struct attribute_list<"HTMLOrSVGElement"> {
     attribute<"dataset", ::ht::unimplemented> dataset;
     attribute<"nonce", std::string_view> nonce;
     attribute<"autofocus", bool> autofocus;
     attribute<"tabIndex", long> tabIndex;
+    attribute<"style", ::ht::style<"HTMLOrSVGElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLElement">: attribute_list<"Element">, attribute_list<"GlobalEventHandlers">, attribute_list<"ElementContentEditable">, attribute_list<"HTMLOrSVGElement"> { 
+template <> struct attribute_list<"HTMLElement">: attribute_list<"Element">, attribute_list<"GlobalEventHandlers">, attribute_list<"ElementContentEditable">, attribute_list<"HTMLOrSVGElement"> {
     attribute<"title", std::string_view> title;
     attribute<"lang", std::string_view> lang;
     attribute<"translate", bool> translate;
@@ -112,26 +124,46 @@ template <> struct attribute_list<"HTMLElement">: attribute_list<"Element">, att
     attribute<"innerText", std::string_view> innerText;
     attribute<"outerText", std::string_view> outerText;
     attribute<"popover", std::string_view> popover;
+    attribute<"style", ::ht::style<"HTMLElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLHtmlElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLHtmlElement">: attribute_list<"HTMLElement"> {
     attribute<"version", std::string_view> version;
+    attribute<"style", ::ht::style<"HTMLHtmlElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLHeadElement">: attribute_list<"HTMLElement"> { };
+template <> struct attribute_list<"HTMLHeadElement">: attribute_list<"HTMLElement"> {
+    attribute<"style", ::ht::style<"HTMLHeadElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
+};
 
-template <> struct attribute_list<"HTMLTitleElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLTitleElement">: attribute_list<"HTMLElement"> {
     attribute<"text", std::string_view> text;
+    attribute<"style", ::ht::style<"HTMLTitleElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLBaseElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLBaseElement">: attribute_list<"HTMLElement"> {
     attribute<"href", std::string_view> href;
     attribute<"target", std::string_view> target;
+    attribute<"style", ::ht::style<"HTMLBaseElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"LinkStyle"> { };
+template <> struct attribute_list<"LinkStyle"> {
+    attribute<"style", ::ht::style<"LinkStyle">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
+};
 
-template <> struct attribute_list<"HTMLLinkElement">: attribute_list<"HTMLElement">, attribute_list<"LinkStyle"> { 
+template <> struct attribute_list<"HTMLLinkElement">: attribute_list<"HTMLElement">, attribute_list<"LinkStyle"> {
     attribute<"href", std::string_view> href;
     attribute<"crossOrigin", std::string_view> crossOrigin;
     attribute<"rel", std::string_view> rel;
@@ -151,24 +183,33 @@ template <> struct attribute_list<"HTMLLinkElement">: attribute_list<"HTMLElemen
     attribute<"charset", std::string_view> charset;
     attribute<"rev", std::string_view> rev;
     attribute<"target", std::string_view> target;
+    attribute<"style", ::ht::style<"HTMLLinkElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLMetaElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLMetaElement">: attribute_list<"HTMLElement"> {
     attribute<"name", std::string_view> name;
     attribute<"httpEquiv", std::string_view> httpEquiv;
     attribute<"content", std::string_view> content;
     attribute<"media", std::string_view> media;
     attribute<"scheme", std::string_view> scheme;
+    attribute<"style", ::ht::style<"HTMLMetaElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLStyleElement">: attribute_list<"HTMLElement">, attribute_list<"LinkStyle"> { 
+template <> struct attribute_list<"HTMLStyleElement">: attribute_list<"HTMLElement">, attribute_list<"LinkStyle"> {
     attribute<"disabled", bool> disabled;
     attribute<"media", std::string_view> media;
     attribute<"blocking", ::ht::unimplemented> blocking;
     attribute<"type", std::string_view> type;
+    attribute<"style", ::ht::style<"HTMLStyleElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"WindowEventHandlers"> { 
+template <> struct attribute_list<"WindowEventHandlers"> {
     attribute<"onafterprint", ::ht::event_handler_attr_type> onafterprint;
     attribute<"onbeforeprint", ::ht::event_handler_attr_type> onbeforeprint;
     attribute<"onbeforeunload", ::ht::unimplemented> onbeforeunload;
@@ -187,71 +228,110 @@ template <> struct attribute_list<"WindowEventHandlers"> {
     attribute<"onstorage", ::ht::event_handler_attr_type> onstorage;
     attribute<"onunhandledrejection", ::ht::event_handler_attr_type> onunhandledrejection;
     attribute<"onunload", ::ht::event_handler_attr_type> onunload;
+    attribute<"style", ::ht::style<"WindowEventHandlers">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLBodyElement">: attribute_list<"HTMLElement">, attribute_list<"WindowEventHandlers"> { 
+template <> struct attribute_list<"HTMLBodyElement">: attribute_list<"HTMLElement">, attribute_list<"WindowEventHandlers"> {
     attribute<"text", std::string_view> text;
     attribute<"link", std::string_view> link;
     attribute<"vLink", std::string_view> vLink;
     attribute<"aLink", std::string_view> aLink;
     attribute<"bgColor", std::string_view> bgColor;
     attribute<"background", std::string_view> background;
+    attribute<"style", ::ht::style<"HTMLBodyElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLHeadingElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLHeadingElement">: attribute_list<"HTMLElement"> {
     attribute<"align", std::string_view> align;
+    attribute<"style", ::ht::style<"HTMLHeadingElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLParagraphElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLParagraphElement">: attribute_list<"HTMLElement"> {
     attribute<"align", std::string_view> align;
+    attribute<"style", ::ht::style<"HTMLParagraphElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLHRElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLHRElement">: attribute_list<"HTMLElement"> {
     attribute<"align", std::string_view> align;
     attribute<"color", std::string_view> color;
     attribute<"noShade", bool> noShade;
     attribute<"size", std::string_view> size;
     attribute<"width", std::string_view> width;
+    attribute<"style", ::ht::style<"HTMLHRElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLPreElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLPreElement">: attribute_list<"HTMLElement"> {
     attribute<"width", std::string_view> width;
+    attribute<"style", ::ht::style<"HTMLPreElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLQuoteElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLQuoteElement">: attribute_list<"HTMLElement"> {
     attribute<"cite", std::string_view> cite;
+    attribute<"style", ::ht::style<"HTMLQuoteElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLOListElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLOListElement">: attribute_list<"HTMLElement"> {
     attribute<"reversed", bool> reversed;
     attribute<"start", long> start;
     attribute<"type", std::string_view> type;
     attribute<"compact", bool> compact;
+    attribute<"style", ::ht::style<"HTMLOListElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLUListElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLUListElement">: attribute_list<"HTMLElement"> {
     attribute<"compact", bool> compact;
     attribute<"type", std::string_view> type;
+    attribute<"style", ::ht::style<"HTMLUListElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLMenuElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLMenuElement">: attribute_list<"HTMLElement"> {
     attribute<"compact", bool> compact;
+    attribute<"style", ::ht::style<"HTMLMenuElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLLIElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLLIElement">: attribute_list<"HTMLElement"> {
     attribute<"value", long> value;
     attribute<"type", std::string_view> type;
+    attribute<"style", ::ht::style<"HTMLLIElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLDListElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLDListElement">: attribute_list<"HTMLElement"> {
     attribute<"compact", bool> compact;
+    attribute<"style", ::ht::style<"HTMLDListElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLDivElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLDivElement">: attribute_list<"HTMLElement"> {
     attribute<"align", std::string_view> align;
+    attribute<"style", ::ht::style<"HTMLDivElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLHyperlinkElementUtils"> { 
+template <> struct attribute_list<"HTMLHyperlinkElementUtils"> {
     attribute<"href", std::string_view> href;
     attribute<"origin", std::string_view> origin;
     attribute<"protocol", std::string_view> protocol;
@@ -263,9 +343,12 @@ template <> struct attribute_list<"HTMLHyperlinkElementUtils"> {
     attribute<"pathname", std::string_view> pathname;
     attribute<"search", std::string_view> search;
     attribute<"hash", std::string_view> hash;
+    attribute<"style", ::ht::style<"HTMLHyperlinkElementUtils">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLAnchorElement">: attribute_list<"HTMLElement">, attribute_list<"HTMLHyperlinkElementUtils"> { 
+template <> struct attribute_list<"HTMLAnchorElement">: attribute_list<"HTMLElement">, attribute_list<"HTMLHyperlinkElementUtils"> {
     attribute<"target", std::string_view> target;
     attribute<"download", std::string_view> download;
     attribute<"ping", std::string_view> ping;
@@ -280,30 +363,53 @@ template <> struct attribute_list<"HTMLAnchorElement">: attribute_list<"HTMLElem
     attribute<"name", std::string_view> name;
     attribute<"rev", std::string_view> rev;
     attribute<"shape", std::string_view> shape;
+    attribute<"style", ::ht::style<"HTMLAnchorElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLDataElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLDataElement">: attribute_list<"HTMLElement"> {
     attribute<"value", long> value;
+    attribute<"style", ::ht::style<"HTMLDataElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLTimeElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLTimeElement">: attribute_list<"HTMLElement"> {
     attribute<"dateTime", std::string_view> dateTime;
+    attribute<"style", ::ht::style<"HTMLTimeElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLSpanElement">: attribute_list<"HTMLElement"> { };
+template <> struct attribute_list<"HTMLSpanElement">: attribute_list<"HTMLElement"> {
+    attribute<"style", ::ht::style<"HTMLSpanElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
+};
 
-template <> struct attribute_list<"HTMLBRElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLBRElement">: attribute_list<"HTMLElement"> {
     attribute<"clear", std::string_view> clear;
+    attribute<"style", ::ht::style<"HTMLBRElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLModElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLModElement">: attribute_list<"HTMLElement"> {
     attribute<"cite", std::string_view> cite;
     attribute<"dateTime", std::string_view> dateTime;
+    attribute<"style", ::ht::style<"HTMLModElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLPictureElement">: attribute_list<"HTMLElement"> { };
+template <> struct attribute_list<"HTMLPictureElement">: attribute_list<"HTMLElement"> {
+    attribute<"style", ::ht::style<"HTMLPictureElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
+};
 
-template <> struct attribute_list<"HTMLSourceElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLSourceElement">: attribute_list<"HTMLElement"> {
     attribute<"src", std::string_view> src;
     attribute<"type", std::string_view> type;
     attribute<"srcset", std::string_view> srcset;
@@ -311,9 +417,12 @@ template <> struct attribute_list<"HTMLSourceElement">: attribute_list<"HTMLElem
     attribute<"media", std::string_view> media;
     attribute<"width", std::string_view> width;
     attribute<"height", unsigned long> height;
+    attribute<"style", ::ht::style<"HTMLSourceElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLImageElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLImageElement">: attribute_list<"HTMLElement"> {
     attribute<"alt", std::string_view> alt;
     attribute<"src", std::string_view> src;
     attribute<"srcset", std::string_view> srcset;
@@ -338,9 +447,12 @@ template <> struct attribute_list<"HTMLImageElement">: attribute_list<"HTMLEleme
     attribute<"vspace", unsigned long> vspace;
     attribute<"longDesc", std::string_view> longDesc;
     attribute<"border", std::string_view> border;
+    attribute<"style", ::ht::style<"HTMLImageElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLIFrameElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLIFrameElement">: attribute_list<"HTMLElement"> {
     attribute<"src", std::string_view> src;
     attribute<"srcdoc", std::variant<::ht::unimplemented, std::string_view>> srcdoc;
     attribute<"name", std::string_view> name;
@@ -359,18 +471,24 @@ template <> struct attribute_list<"HTMLIFrameElement">: attribute_list<"HTMLElem
     attribute<"longDesc", std::string_view> longDesc;
     attribute<"marginHeight", std::string_view> marginHeight;
     attribute<"marginWidth", std::string_view> marginWidth;
+    attribute<"style", ::ht::style<"HTMLIFrameElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLEmbedElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLEmbedElement">: attribute_list<"HTMLElement"> {
     attribute<"src", std::string_view> src;
     attribute<"type", std::string_view> type;
     attribute<"width", std::string_view> width;
     attribute<"height", unsigned long> height;
     attribute<"align", std::string_view> align;
     attribute<"name", std::string_view> name;
+    attribute<"style", ::ht::style<"HTMLEmbedElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLObjectElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLObjectElement">: attribute_list<"HTMLElement"> {
     attribute<"data", std::string_view> data;
     attribute<"type", std::string_view> type;
     attribute<"name", std::string_view> name;
@@ -393,9 +511,12 @@ template <> struct attribute_list<"HTMLObjectElement">: attribute_list<"HTMLElem
     attribute<"codeType", std::string_view> codeType;
     attribute<"useMap", std::string_view> useMap;
     attribute<"border", std::string_view> border;
+    attribute<"style", ::ht::style<"HTMLObjectElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLMediaElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLMediaElement">: attribute_list<"HTMLElement"> {
     attribute<"error", ::ht::unimplemented> error;
     attribute<"src", std::string_view> src;
     attribute<"srcObject", ::ht::unimplemented> srcObject;
@@ -424,25 +545,38 @@ template <> struct attribute_list<"HTMLMediaElement">: attribute_list<"HTMLEleme
     attribute<"audioTracks", ::ht::unimplemented> audioTracks;
     attribute<"videoTracks", ::ht::unimplemented> videoTracks;
     attribute<"textTracks", ::ht::unimplemented> textTracks;
+    attribute<"style", ::ht::style<"HTMLMediaElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLVideoElement">: attribute_list<"HTMLMediaElement"> { 
+template <> struct attribute_list<"HTMLVideoElement">: attribute_list<"HTMLMediaElement"> {
     attribute<"width", std::string_view> width;
     attribute<"height", unsigned long> height;
     attribute<"videoWidth", unsigned long> videoWidth;
     attribute<"videoHeight", unsigned long> videoHeight;
     attribute<"poster", std::string_view> poster;
     attribute<"playsInline", bool> playsInline;
+    attribute<"style", ::ht::style<"HTMLVideoElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLAudioElement">: attribute_list<"HTMLMediaElement"> { };
+template <> struct attribute_list<"HTMLAudioElement">: attribute_list<"HTMLMediaElement"> {
+    attribute<"style", ::ht::style<"HTMLAudioElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
+};
 
-template <> struct attribute_list<"HTMLMapElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLMapElement">: attribute_list<"HTMLElement"> {
     attribute<"name", std::string_view> name;
     attribute<"areas", ::ht::unimplemented> areas;
+    attribute<"style", ::ht::style<"HTMLMapElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLAreaElement">: attribute_list<"HTMLElement">, attribute_list<"HTMLHyperlinkElementUtils"> { 
+template <> struct attribute_list<"HTMLAreaElement">: attribute_list<"HTMLElement">, attribute_list<"HTMLHyperlinkElementUtils"> {
     attribute<"alt", std::string_view> alt;
     attribute<"coords", std::string_view> coords;
     attribute<"shape", std::string_view> shape;
@@ -453,9 +587,12 @@ template <> struct attribute_list<"HTMLAreaElement">: attribute_list<"HTMLElemen
     attribute<"relList", ::ht::unimplemented> relList;
     attribute<"referrerPolicy", std::string_view> referrerPolicy;
     attribute<"noHref", bool> noHref;
+    attribute<"style", ::ht::style<"HTMLAreaElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLTableElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLTableElement">: attribute_list<"HTMLElement"> {
     attribute<"caption", ::ht::unimplemented> caption;
     attribute<"tHead", ::ht::unimplemented> tHead;
     attribute<"tFoot", ::ht::unimplemented> tFoot;
@@ -470,30 +607,42 @@ template <> struct attribute_list<"HTMLTableElement">: attribute_list<"HTMLEleme
     attribute<"bgColor", std::string_view> bgColor;
     attribute<"cellPadding", std::string_view> cellPadding;
     attribute<"cellSpacing", std::string_view> cellSpacing;
+    attribute<"style", ::ht::style<"HTMLTableElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLTableCaptionElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLTableCaptionElement">: attribute_list<"HTMLElement"> {
     attribute<"align", std::string_view> align;
+    attribute<"style", ::ht::style<"HTMLTableCaptionElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLTableColElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLTableColElement">: attribute_list<"HTMLElement"> {
     attribute<"span", unsigned long> span;
     attribute<"align", std::string_view> align;
     attribute<"ch", std::string_view> ch;
     attribute<"chOff", std::string_view> chOff;
     attribute<"vAlign", std::string_view> vAlign;
     attribute<"width", std::string_view> width;
+    attribute<"style", ::ht::style<"HTMLTableColElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLTableSectionElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLTableSectionElement">: attribute_list<"HTMLElement"> {
     attribute<"rows", ::ht::unimplemented> rows;
     attribute<"align", std::string_view> align;
     attribute<"ch", std::string_view> ch;
     attribute<"chOff", std::string_view> chOff;
     attribute<"vAlign", std::string_view> vAlign;
+    attribute<"style", ::ht::style<"HTMLTableSectionElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLTableRowElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLTableRowElement">: attribute_list<"HTMLElement"> {
     attribute<"rowIndex", long> rowIndex;
     attribute<"sectionRowIndex", long> sectionRowIndex;
     attribute<"cells", ::ht::unimplemented> cells;
@@ -502,9 +651,12 @@ template <> struct attribute_list<"HTMLTableRowElement">: attribute_list<"HTMLEl
     attribute<"chOff", std::string_view> chOff;
     attribute<"vAlign", std::string_view> vAlign;
     attribute<"bgColor", std::string_view> bgColor;
+    attribute<"style", ::ht::style<"HTMLTableRowElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLTableCellElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLTableCellElement">: attribute_list<"HTMLElement"> {
     attribute<"colSpan", unsigned long> colSpan;
     attribute<"rowSpan", unsigned long> rowSpan;
     attribute<"headers", std::string_view> headers;
@@ -520,9 +672,12 @@ template <> struct attribute_list<"HTMLTableCellElement">: attribute_list<"HTMLE
     attribute<"noWrap", bool> noWrap;
     attribute<"vAlign", std::string_view> vAlign;
     attribute<"bgColor", std::string_view> bgColor;
+    attribute<"style", ::ht::style<"HTMLTableCellElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLFormElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLFormElement">: attribute_list<"HTMLElement"> {
     attribute<"acceptCharset", std::string_view> acceptCharset;
     attribute<"action", std::string_view> action;
     attribute<"autocomplete", std::string_view> autocomplete;
@@ -536,20 +691,29 @@ template <> struct attribute_list<"HTMLFormElement">: attribute_list<"HTMLElemen
     attribute<"relList", ::ht::unimplemented> relList;
     attribute<"elements", ::ht::unimplemented> elements;
     attribute<"length", unsigned long> length;
+    attribute<"style", ::ht::style<"HTMLFormElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLLabelElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLLabelElement">: attribute_list<"HTMLElement"> {
     attribute<"form", ::ht::unimplemented> form;
     attribute<"htmlFor", std::string_view> htmlFor;
     attribute<"control", ::ht::unimplemented> control;
+    attribute<"style", ::ht::style<"HTMLLabelElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"PopoverInvokerElement"> { 
+template <> struct attribute_list<"PopoverInvokerElement"> {
     attribute<"popoverTargetElement", ::ht::unimplemented> popoverTargetElement;
     attribute<"popoverTargetAction", std::string_view> popoverTargetAction;
+    attribute<"style", ::ht::style<"PopoverInvokerElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLInputElement">: attribute_list<"HTMLElement">, attribute_list<"PopoverInvokerElement"> { 
+template <> struct attribute_list<"HTMLInputElement">: attribute_list<"HTMLElement">, attribute_list<"PopoverInvokerElement"> {
     attribute<"accept", std::string_view> accept;
     attribute<"alpha", bool> alpha;
     attribute<"alt", std::string_view> alt;
@@ -597,9 +761,12 @@ template <> struct attribute_list<"HTMLInputElement">: attribute_list<"HTMLEleme
     attribute<"selectionDirection", std::string_view> selectionDirection;
     attribute<"align", std::string_view> align;
     attribute<"useMap", std::string_view> useMap;
+    attribute<"style", ::ht::style<"HTMLInputElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLButtonElement">: attribute_list<"HTMLElement">, attribute_list<"PopoverInvokerElement"> { 
+template <> struct attribute_list<"HTMLButtonElement">: attribute_list<"HTMLElement">, attribute_list<"PopoverInvokerElement"> {
     attribute<"disabled", bool> disabled;
     attribute<"form", ::ht::unimplemented> form;
     attribute<"formAction", std::string_view> formAction;
@@ -614,9 +781,12 @@ template <> struct attribute_list<"HTMLButtonElement">: attribute_list<"HTMLElem
     attribute<"validity", ::ht::unimplemented> validity;
     attribute<"validationMessage", std::string_view> validationMessage;
     attribute<"labels", ::ht::unimplemented> labels;
+    attribute<"style", ::ht::style<"HTMLButtonElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLSelectElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLSelectElement">: attribute_list<"HTMLElement"> {
     attribute<"autocomplete", std::string_view> autocomplete;
     attribute<"disabled", bool> disabled;
     attribute<"form", ::ht::unimplemented> form;
@@ -634,18 +804,27 @@ template <> struct attribute_list<"HTMLSelectElement">: attribute_list<"HTMLElem
     attribute<"validity", ::ht::unimplemented> validity;
     attribute<"validationMessage", std::string_view> validationMessage;
     attribute<"labels", ::ht::unimplemented> labels;
+    attribute<"style", ::ht::style<"HTMLSelectElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLDataListElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLDataListElement">: attribute_list<"HTMLElement"> {
     attribute<"options", ::ht::unimplemented> options;
+    attribute<"style", ::ht::style<"HTMLDataListElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLOptGroupElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLOptGroupElement">: attribute_list<"HTMLElement"> {
     attribute<"disabled", bool> disabled;
     attribute<"label", std::string_view> label;
+    attribute<"style", ::ht::style<"HTMLOptGroupElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLOptionElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLOptionElement">: attribute_list<"HTMLElement"> {
     attribute<"disabled", bool> disabled;
     attribute<"form", ::ht::unimplemented> form;
     attribute<"label", std::string_view> label;
@@ -654,9 +833,12 @@ template <> struct attribute_list<"HTMLOptionElement">: attribute_list<"HTMLElem
     attribute<"value", long> value;
     attribute<"text", std::string_view> text;
     attribute<"index", long> index;
+    attribute<"style", ::ht::style<"HTMLOptionElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLTextAreaElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLTextAreaElement">: attribute_list<"HTMLElement"> {
     attribute<"autocomplete", std::string_view> autocomplete;
     attribute<"cols", unsigned long> cols;
     attribute<"dirName", std::string_view> dirName;
@@ -681,9 +863,12 @@ template <> struct attribute_list<"HTMLTextAreaElement">: attribute_list<"HTMLEl
     attribute<"selectionStart", unsigned long> selectionStart;
     attribute<"selectionEnd", unsigned long> selectionEnd;
     attribute<"selectionDirection", std::string_view> selectionDirection;
+    attribute<"style", ::ht::style<"HTMLTextAreaElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLOutputElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLOutputElement">: attribute_list<"HTMLElement"> {
     attribute<"htmlFor", std::string_view> htmlFor;
     attribute<"form", ::ht::unimplemented> form;
     attribute<"name", std::string_view> name;
@@ -694,16 +879,22 @@ template <> struct attribute_list<"HTMLOutputElement">: attribute_list<"HTMLElem
     attribute<"validity", ::ht::unimplemented> validity;
     attribute<"validationMessage", std::string_view> validationMessage;
     attribute<"labels", ::ht::unimplemented> labels;
+    attribute<"style", ::ht::style<"HTMLOutputElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLProgressElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLProgressElement">: attribute_list<"HTMLElement"> {
     attribute<"value", long> value;
     attribute<"max", std::string_view> max;
     attribute<"position", double> position;
     attribute<"labels", ::ht::unimplemented> labels;
+    attribute<"style", ::ht::style<"HTMLProgressElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLMeterElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLMeterElement">: attribute_list<"HTMLElement"> {
     attribute<"value", long> value;
     attribute<"min", std::string_view> min;
     attribute<"max", std::string_view> max;
@@ -711,9 +902,12 @@ template <> struct attribute_list<"HTMLMeterElement">: attribute_list<"HTMLEleme
     attribute<"high", double> high;
     attribute<"optimum", double> optimum;
     attribute<"labels", ::ht::unimplemented> labels;
+    attribute<"style", ::ht::style<"HTMLMeterElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLFieldSetElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLFieldSetElement">: attribute_list<"HTMLElement"> {
     attribute<"disabled", bool> disabled;
     attribute<"form", ::ht::unimplemented> form;
     attribute<"name", std::string_view> name;
@@ -722,24 +916,36 @@ template <> struct attribute_list<"HTMLFieldSetElement">: attribute_list<"HTMLEl
     attribute<"willValidate", bool> willValidate;
     attribute<"validity", ::ht::unimplemented> validity;
     attribute<"validationMessage", std::string_view> validationMessage;
+    attribute<"style", ::ht::style<"HTMLFieldSetElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLLegendElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLLegendElement">: attribute_list<"HTMLElement"> {
     attribute<"form", ::ht::unimplemented> form;
     attribute<"align", std::string_view> align;
+    attribute<"style", ::ht::style<"HTMLLegendElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLDetailsElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLDetailsElement">: attribute_list<"HTMLElement"> {
     attribute<"name", std::string_view> name;
     attribute<"open", bool> open;
+    attribute<"style", ::ht::style<"HTMLDetailsElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLDialogElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLDialogElement">: attribute_list<"HTMLElement"> {
     attribute<"open", bool> open;
     attribute<"returnValue", std::string_view> returnValue;
+    attribute<"style", ::ht::style<"HTMLDialogElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLScriptElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLScriptElement">: attribute_list<"HTMLElement"> {
     attribute<"src", std::string_view> src;
     attribute<"type", std::string_view> type;
     attribute<"noModule", bool> noModule;
@@ -754,24 +960,40 @@ template <> struct attribute_list<"HTMLScriptElement">: attribute_list<"HTMLElem
     attribute<"charset", std::string_view> charset;
     attribute<"event", std::string_view> event;
     attribute<"htmlFor", std::string_view> htmlFor;
+    attribute<"style", ::ht::style<"HTMLScriptElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLSlotElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLSlotElement">: attribute_list<"HTMLElement"> {
     attribute<"name", std::string_view> name;
+    attribute<"style", ::ht::style<"HTMLSlotElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLCanvasElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLCanvasElement">: attribute_list<"HTMLElement"> {
     attribute<"width", std::string_view> width;
     attribute<"height", unsigned long> height;
+    attribute<"style", ::ht::style<"HTMLCanvasElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLUnknownElement">: attribute_list<"HTMLElement"> { };
+template <> struct attribute_list<"HTMLUnknownElement">: attribute_list<"HTMLElement"> {
+    attribute<"style", ::ht::style<"HTMLUnknownElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
+};
 
-template <> struct attribute_list<"HTMLDirectoryElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLDirectoryElement">: attribute_list<"HTMLElement"> {
     attribute<"compact", bool> compact;
+    attribute<"style", ::ht::style<"HTMLDirectoryElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLFrameElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLFrameElement">: attribute_list<"HTMLElement"> {
     attribute<"name", std::string_view> name;
     attribute<"scrolling", std::string_view> scrolling;
     attribute<"src", std::string_view> src;
@@ -782,27 +1004,39 @@ template <> struct attribute_list<"HTMLFrameElement">: attribute_list<"HTMLEleme
     attribute<"contentWindow", ::ht::unimplemented> contentWindow;
     attribute<"marginHeight", std::string_view> marginHeight;
     attribute<"marginWidth", std::string_view> marginWidth;
+    attribute<"style", ::ht::style<"HTMLFrameElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLFrameSetElement">: attribute_list<"HTMLElement">, attribute_list<"WindowEventHandlers"> { 
+template <> struct attribute_list<"HTMLFrameSetElement">: attribute_list<"HTMLElement">, attribute_list<"WindowEventHandlers"> {
     attribute<"cols", unsigned long> cols;
     attribute<"rows", ::ht::unimplemented> rows;
+    attribute<"style", ::ht::style<"HTMLFrameSetElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLParamElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLParamElement">: attribute_list<"HTMLElement"> {
     attribute<"name", std::string_view> name;
     attribute<"value", long> value;
     attribute<"type", std::string_view> type;
     attribute<"valueType", std::string_view> valueType;
+    attribute<"style", ::ht::style<"HTMLParamElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLFontElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLFontElement">: attribute_list<"HTMLElement"> {
     attribute<"color", std::string_view> color;
     attribute<"face", std::string_view> face;
     attribute<"size", std::string_view> size;
+    attribute<"style", ::ht::style<"HTMLFontElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 
-template <> struct attribute_list<"HTMLMarqueeElement">: attribute_list<"HTMLElement"> { 
+template <> struct attribute_list<"HTMLMarqueeElement">: attribute_list<"HTMLElement"> {
     attribute<"behavior", std::string_view> behavior;
     attribute<"bgColor", std::string_view> bgColor;
     attribute<"direction", std::string_view> direction;
@@ -814,5 +1048,8 @@ template <> struct attribute_list<"HTMLMarqueeElement">: attribute_list<"HTMLEle
     attribute<"trueSpeed", bool> trueSpeed;
     attribute<"vspace", unsigned long> vspace;
     attribute<"width", std::string_view> width;
+    attribute<"style", ::ht::style<"HTMLMarqueeElement">> style;
+    attribute<"class", std::string_view> className;
+    attribute<"id", std::string_view> id;
 };
 

@@ -47,7 +47,7 @@ struct element<Tag, interface_spec<In, Parent, Attrs...>, Aspects...>: public at
 /// Satisfied when an lvalue reference to a specialization of \ref ht::element can bind to `T`, and in particular when
 /// `T` is derived from such a specialization.
 template <class T> concept element_type =
-        requires(T t) { []<static_string Tag, class Spec, class... Cs>(element<Tag, Spec, Cs...>&) { }(t); };
+        requires(T t) { []<static_string Tag, class Spec, class... Cs>(const element<Tag, Spec, Cs...>&) { }(t); };
 
 } // namespace ht
 

@@ -101,10 +101,13 @@ function makeAttributeListSection(defs: IdlInterface[]) {
         if (def.parents.length > 0 || def.includes.length > 0) {
             attributeListSection += `: ${[...def.parents, ...def.includes].map(i => `attribute_list<"${i}">`).join(", ")}`
         }
-        attributeListSection += " { ";
+        attributeListSection += " {\n";
         indentLevel++;
         const x = defs.flatMap(d => d.attributes);
-        if (def.attributes.length > 0) attributeListSection += "\n" + def.attributes.map(attr => indent(`attribute<"${attr.attrName}", ${makeAttrVariant(x.find(b => attr.attrName === b.attrName).attrType)}> ${attr.attrName};\n`)).join("");
+        if (def.attributes.length > 0) attributeListSection += def.attributes.map(attr => indent(`attribute<"${attr.attrName}", ${makeAttrVariant(x.find(b => attr.attrName === b.attrName).attrType)}> ${attr.attrName};\n`)).join("");
+        attributeListSection += indent(`attribute<"style", ::ht::style<"${def.interfaceName}">> style;\n`)
+        attributeListSection += indent(`attribute<"class", std::string_view> className;\n`)
+        attributeListSection += indent(`attribute<"id", std::string_view> id;\n`)
         indentLevel--;
         attributeListSection += "};\n\n"
     })
