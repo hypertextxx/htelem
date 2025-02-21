@@ -4,10 +4,10 @@ project(htelem)
 
 set(CMAKE_CXX_STANDARD 26)
 
-set(HTELEM_HEADER_PATH "${CMAKE_SOURCE_DIR}/include/htelem")
+set(HTELEM_HEADER_PATH "${CMAKE_CURRENT_SOURCE_DIR}/include/htelem")
 file(GLOB_RECURSE HTELEM_SOURCES "${HTELEM_HEADER_PATH}/*.h")
 
-set(HTELEM_AUTOGEN_DIR "${CMAKE_SOURCE_DIR}/tools/htelem-autogen")
+set(HTELEM_AUTOGEN_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tools/htelem-autogen")
 
 add_custom_command(
     OUTPUT "${HTELEM_AUTOGEN_DIR}/out/attribute_lists.def" "${HTELEM_AUTOGEN_DIR}/out/attribute_spec.def" "${HTELEM_AUTOGEN_DIR}/out/elements.def" "${HTELEM_AUTOGEN_DIR}/out/interface_spec.def"
@@ -36,8 +36,8 @@ if(PROJECT_IS_TOP_LEVEL)
     find_package(Doxygen)
     if(DOXYGEN_FOUND)
         set(DOXYGEN_MULTILINE_CPP_IS_BRIEF 1)
-        set(DOXYGEN_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/docs")
-        set(DOXYGEN_TAGFILES "${CMAKE_SOURCE_DIR}/docs/cppreference-doxygen-web.tag.xml=https://en.cppreference.com/w/")
+        set(DOXYGEN_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/docs")
+        set(DOXYGEN_TAGFILES "${CMAKE_CURRENT_SOURCE_DIR}/docs/cppreference-doxygen-web.tag.xml=https://en.cppreference.com/w/")
         doxygen_add_docs(docs "${HTELEM_SOURCES}")
     endif()
 
