@@ -7,19 +7,23 @@ set(CMAKE_CXX_STANDARD 26)
 set(HTELEM_HEADER_PATH "${CMAKE_CURRENT_SOURCE_DIR}/include/htelem")
 file(GLOB_RECURSE HTELEM_SOURCES "${HTELEM_HEADER_PATH}/*.h")
 
-set(HTELEM_AUTOGEN_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tools/htelem-autogen")
-
-add_custom_command(
-    OUTPUT "${HTELEM_AUTOGEN_DIR}/out/attribute_lists.def" "${HTELEM_AUTOGEN_DIR}/out/attribute_spec.def" "${HTELEM_AUTOGEN_DIR}/out/elements.def" "${HTELEM_AUTOGEN_DIR}/out/interface_spec.def"
-    COMMAND "npm" ARGS "start"
-    DEPENDS "${HTELEM_AUTOGEN_DIR}/index.ts"
-    WORKING_DIRECTORY "${HTELEM_AUTOGEN_DIR}")
-
-add_custom_target(ht-defs DEPENDS "${HTELEM_AUTOGEN_DIR}/out/attribute_lists.def" "${HTELEM_AUTOGEN_DIR}/out/attribute_spec.def" "${HTELEM_AUTOGEN_DIR}/out/elements.def" "${HTELEM_AUTOGEN_DIR}/out/interface_spec.def")
-
 add_library(htelem INTERFACE ${HTELEM_SOURCES})
+
+set(HTELEM_AUTOGEN_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tools/htelem-autogen")
+option(HTELEM_BUILD_DEFS "Build definition files from webref" ON)
+
+if(HTELEM_BUILD_DEFS)
+    add_custom_command(
+        OUTPUT "${HTELEM_AUTOGEN_DIR}/out/attribute_lists.def" "${HTELEM_AUTOGEN_DIR}/out/attribute_spec.def" "${HTELEM_AUTOGEN_DIR}/out/elements.def" "${HTELEM_AUTOGEN_DIR}/out/interface_spec.def"
+        COMMAND "npm" ARGS "start"
+        DEPENDS "${HTELEM_AUTOGEN_DIR}/index.ts"
+        WORKING_DIRECTORY "${HTELEM_AUTOGEN_DIR}")
+
+    add_custom_target(ht-defs DEPENDS "${HTELEM_AUTOGEN_DIR}/out/attribute_lists.def" "${HTELEM_AUTOGEN_DIR}/out/attribute_spec.def" "${HTELEM_AUTOGEN_DIR}/out/elements.def" "${HTELEM_AUTOGEN_DIR}/out/interface_spec.def")
+    add_dependencies(htelem ht-defs)
+endif()
+
 target_include_directories(htelem INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-add_dependencies(htelem ht-defs)
 
 if(PROJECT_IS_TOP_LEVEL)
     add_custom_target(autoformat)
